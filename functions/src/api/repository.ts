@@ -1,5 +1,5 @@
-import { Items, Item } from './types/items';
-import { db } from './utils/firebase';
+import { Items, Item } from '../types/items';
+import { db } from '../utils/firebase';
 
 // eslint-disable-next-line import/prefer-default-export
 export const saveItems = (uid:string, newItems: Items):void => {
