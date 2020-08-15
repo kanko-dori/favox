@@ -3,18 +3,26 @@
   flex-wrap: wrap;
   flex-direction: row-reverse;
   align-items: center;
+  padding: 3em;
 
-  height: 100%;
+  width: 80vw;
 }
 
 .info {
-  width: 60%;
+  width: 50%;
   align-self: stretch;
 }
+.info h3 {
+  font-size: 3em;
+}
+.info p {
+  font-size: 1.25em;
+}
 .image {
-  width: 40%;
+  width: 50%;
 }
 .image img {
+  display: block;
   width: 80%;
   max-height: 100%;
 

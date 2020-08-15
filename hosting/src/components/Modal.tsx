@@ -9,6 +9,11 @@ const styles = {
       borderRadius: 0,
       padding: 0,
       border: 0,
+      top: '50%',
+      left: '50%',
+      bottom: 'auto',
+      right: 'auto',
+      transform: 'translate(-50%, -50%)',
     },
     overlay: {
       backgroundColor: 'rgba(0,0,0, 0.4)',
