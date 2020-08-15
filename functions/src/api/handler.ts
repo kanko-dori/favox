@@ -2,9 +2,9 @@
 import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
-import { addNewPlaylistParams, getParam, getItem } from './types/route';
-import { Playlist } from './types/spotify';
-import { Items, Item } from './types/items';
+import { addNewPlaylistParams, getParam, getItem } from '../types/route';
+import { Playlist } from '../types/spotify';
+import { Items, Item } from '../types/items';
 import * as repository from './repository';
 
 export const ping = (_request: Request, response: Response): void => {
