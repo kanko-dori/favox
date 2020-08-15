@@ -16,7 +16,7 @@ app.get('/api/', ping);
 
 app.get('/api/secure/', verifyRequest, ping);
 
-app.get('/api/:userID/', verifyRequest, getItems);
+app.get('/api/:userID/', getItems);
 app.post('/api/:userID/spotify/', verifyRequest, addNewPlaylist);
 
 exports.api = functions.https.onRequest(app);

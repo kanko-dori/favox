@@ -2,7 +2,7 @@
 import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
-import { addNewPlaylistParams } from './types/route';
+import { addNewPlaylistParams, getParam } from './types/route';
 import { Playlist } from './types/spotify';
 import { Items } from './types/items';
 import * as repository from './repository';
@@ -42,7 +42,7 @@ export const addNewPlaylist = (
     },
   ).then(
     (playlist) => {
-      repository.saveItems(response.locals.user.uid, playlist);
+      repository.saveItems(request.params.userID, playlist);
       response.json(playlist);
     },
   ).catch((err) => {
@@ -51,8 +51,8 @@ export const addNewPlaylist = (
   });
 };
 
-export const getItems = (request: Request, response: Response) : void => {
-  repository.getItems(response.locals.user.uid).then(
+export const getItems = (request: Request<getParam>, response: Response) : void => {
+  repository.getItems(request.params.userID).then(
     (items) => {
       response.json(items);
     },
