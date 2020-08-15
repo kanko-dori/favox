@@ -1,7 +1,6 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row-reverse;
   align-items: center;
   padding: 3em;
 
@@ -19,6 +18,7 @@
   font-size: 1.25em;
 }
 .image {
+  position: relative;
   width: 50%;
 }
 .image img {
@@ -29,8 +29,21 @@
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .container {
-    flex-direction: row;
+    padding: 2em;
+  }
+  .info {
+    width: 100%;
+    margin: 1em;
+  }
+  .info h3 {
+    font-size: 2em;
+  }
+  .info p {
+    font-size: 1em;
+  }
+  .image {
+    width: 100%;
   }
 }
