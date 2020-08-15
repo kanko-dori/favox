@@ -2,7 +2,7 @@
 import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
-import { addNewPlaylistParams, getParam } from './types/route';
+import { addNewPlaylistParams, getParam, getItem } from './types/route';
 import { Playlist } from './types/spotify';
 import { Items, Item } from './types/items';
 import * as repository from './repository';
@@ -77,4 +77,17 @@ export const addNewItem = (request: Request<getParam>, response: Response): void
   } catch (e) {
     response.status(500).json(e);
   }
+};
+
+export const getItemByNumber = (request: Request<getItem>, response: Response) : void => {
+  const number = parseInt(request.params.itemNumber, 10);
+  if (Number.isNaN(number)) {
+    response.sendStatus(400);
+  }
+  repository.getItems(request.params.userID).then(
+    (items) => {
+      const item = items[number];
+      response.json(item);
+    },
+  );
 };
