@@ -33,4 +33,8 @@ const Modal: React.FC<Props> = (props: Props) => (
   </ReactModal>
 );
 
+Modal.defaultProps = {
+  style: {},
+};
+
 export default Modal;
