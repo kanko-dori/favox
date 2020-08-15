@@ -9,15 +9,25 @@ const styles = {
 };
 
 interface Props {
-  username: string;
+  username?: string;
 }
 
 const Header: React.FC<Props> = (props: Props) => (
   <header style={styles.header} className={classes.header}>
     <h1>Favox</h1>
-    <div className={classes.divider} />
-    <p>{props.username}</p>
+    {
+      props.username && (
+        <>
+          <div className={classes.divider} />
+          <p>{props.username}</p>
+        </>
+      )
+    }
   </header>
 );
+
+Header.defaultProps = {
+  username: undefined,
+};
 
 export default Header;
