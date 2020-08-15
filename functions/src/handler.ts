@@ -111,3 +111,17 @@ export const putItemByNumber = (request: Request<getItem>, response: Response) :
     response.status(500).json(e);
   }
 };
+
+export const deleteItemByNumber = (request: Request<getItem>, response: Response) : void => {
+  const order = parseInt(request.params.itemNumber, 10);
+  if (Number.isNaN(order)) {
+    response.sendStatus(400);
+  }
+
+  try {
+    repository.deleteItem(request.params.userID, order);
+    response.sendStatus(200);
+  } catch (e) {
+    response.status(500).json(e);
+  }
+};

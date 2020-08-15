@@ -53,3 +53,22 @@ export const updateItem = (uid:string, newItem: Item, order: number):void => {
     (error) => { throw new Error(error); },
   );
 };
+
+export const deleteItem = (uid:string, order: number):void => {
+  const docRef = db.collection('users').doc(uid);
+  // items.forEach((item) => collectionRef.add(item));
+  db.runTransaction((transaction) => transaction.get(docRef).then((doc) => {
+    if (!doc.data()) {
+      throw new Error("document doesn't exist");
+    } else {
+      const data = doc.data() as {items: Items} || [];
+      const { items } = data;
+      items.splice(order, 1);
+      transaction.update(docRef, { items });
+    }
+  }).then(
+    () => { console.log('Transaction successfully committed!'); },
+  )).catch(
+    (error) => { throw new Error(error); },
+  );
+};
