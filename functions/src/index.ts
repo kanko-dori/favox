@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 import * as express from 'express';
 import * as cors from 'cors';
 import {
-  ping, addNewPlaylist, getItems, getItemByNumber, addNewItem,
+  ping, addNewPlaylist, getItems, addNewItem, getItemByNumber, putItemByNumber,
 } from './handler';
 import { verifyRequest } from './auth';
 
@@ -19,8 +19,11 @@ app.get('/api/', ping);
 app.get('/api/secure/', verifyRequest, ping);
 
 app.get('/api/:userID/', getItems);
-app.post('/api/:userID/item', verifyRequest, addNewItem);
 app.get('/api/:userID/item/:itemNumber', getItemByNumber);
+
+app.post('/api/:userID/item', verifyRequest, addNewItem);
+app.put('/api/:userID/item/:itemNumber', verifyRequest, putItemByNumber);
+
 app.post('/api/:userID/spotify/', verifyRequest, addNewPlaylist);
 
 exports.api = functions.https.onRequest(app);
