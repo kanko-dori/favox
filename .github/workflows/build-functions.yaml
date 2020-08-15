@@ -2,8 +2,7 @@ name: build-functions
 on:
   pull_request:
     branches: [ master ]
-    paths:
-    - 'functions/**'
+    paths: [ 'functions/**' ]
 jobs:
   build:
     runs-on: ubuntu-latest

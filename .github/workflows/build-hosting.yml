@@ -2,6 +2,7 @@ name: build-hosting
 on:
   pull_request:
     branches: [ master ]
+    paths: [ 'hosting/**' ]
 
 jobs:
   build:
