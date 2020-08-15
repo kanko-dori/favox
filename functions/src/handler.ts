@@ -61,6 +61,7 @@ export const getItems = (request: Request<getParam>, response: Response) : void 
 
 export const getItemByNumber = (request: Request<getItem>, response: Response) : void => {
   const number = parseInt(request.params.itemNumber, 10);
+  // eslint-disable-next-line no-restricted-globals
   if (isNaN(number)) {
     response.sendStatus(400);
   }
