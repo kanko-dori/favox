@@ -16,7 +16,7 @@ const fetchPlaylist = (playlistID:string):Promise<Playlist> => new Promise((reso
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.SPOTIFY_TOKEN}`,
+    Authorization: `Bearer ${functions.config().spotify.token}`,
   };
   fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, { headers })
     .then((res) => res.json())
