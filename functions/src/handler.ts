@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import { Request, Response } from 'express';
 import { addNewPlaylistParams, getParam } from './types/route';
 import { Playlist } from './types/spotify';
-import { Items } from './types/items';
+import { Items, Item } from './types/items';
 import * as repository from './repository';
 
 export const ping = (_request: Request, response: Response): void => {
@@ -42,8 +42,12 @@ export const addNewPlaylist = (
     },
   ).then(
     (playlist) => {
-      repository.saveItems(request.params.userID, playlist);
-      response.json(playlist);
+      try {
+        repository.saveItems(request.params.userID, playlist);
+        response.json(playlist);
+      } catch (e) {
+        response.status(500).json(e);
+      }
     },
   ).catch((err) => {
     console.error(err);
@@ -57,4 +61,20 @@ export const getItems = (request: Request<getParam>, response: Response) : void 
       response.json(items);
     },
   );
+};
+
+export const addNewItem = (request: Request<getParam>, response: Response): void => {
+  const item = request.body as Item;
+  console.log(item);
+  if (!item.imageURL || !item.title || !item.description || !item.url) {
+    console.log('something is lacked');
+    response.sendStatus(400);
+    return;
+  }
+  try {
+    repository.saveItems(request.params.userID, [item]);
+    response.sendStatus(200);
+  } catch (e) {
+    response.status(500).json(e);
+  }
 };
