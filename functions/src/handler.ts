@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import { addNewPlaylistParams } from './types/route';
 import { Playlist } from './types/spotify';
 import { Items } from './types/items';
+import { saveItems } from './repository';
 
 export const ping = (_request: Request, response: Response): void => {
   functions.logger.info('ping');
@@ -41,7 +42,7 @@ export const addNewPlaylist = (
     },
   ).then(
     (playlist) => {
-      console.log(playlist);
+      saveItems(response.locals.user.uid, playlist);
       response.json(playlist);
     },
   );
