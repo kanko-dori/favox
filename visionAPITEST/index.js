@@ -64,6 +64,8 @@ async function dominantColor()  {
     // else
         console.log("背景色に明度を落とした色を提案｛R:"+ downbrightR + ",G:"+ downbrightG + ",B:"+ downbrightB + "}");
 
+        var colorcode = "#"+ downbrightR.toString(16) + downbrightG.toString(16) + downbrightB.toString(16);
+        console.log(colorcode);
 }
 
 console.log("test");
