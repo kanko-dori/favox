@@ -8,6 +8,12 @@
   },
   "hosting": {
     "public": "hosting/build",
+    "rewrite": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
