@@ -15,12 +15,6 @@
       "npm --prefix hosting run build"
     ],
     "public": "hosting/build",
-    "rewrite": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -30,6 +24,10 @@
       {
         "source": "/api{,/**}",
         "function":"api"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },
