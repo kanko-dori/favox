@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { theme } from '../utils/constants';
 import classes from './Header.module.css';
 
@@ -10,10 +10,11 @@ const styles = {
 
 interface Props {
   username?: string;
+  style?: CSSProperties;
 }
 
 const Header: React.FC<Props> = (props: Props) => (
-  <header style={styles.header} className={classes.header}>
+  <header style={{ ...styles.header, ...props.style }} className={classes.header}>
     <h1>Favox</h1>
     {
       props.username && (
@@ -28,6 +29,7 @@ const Header: React.FC<Props> = (props: Props) => (
 
 Header.defaultProps = {
   username: undefined,
+  style: {},
 };
 
 export default Header;
