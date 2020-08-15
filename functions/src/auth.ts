@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import * as admin from 'firebase-admin';
-import * as Express from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-export const verifyRequest = (req:Express.Request, res: Express.Response, next: any):void => {
+export const verifyRequest = (req: Request, res: Response, next: NextFunction):void => {
   const authorization = req.header('Authorization');
   if (authorization) {
     const token = authorization.split(' ');
