@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 import * as express from 'express';
 import * as cors from 'cors';
 import {
-  ping, addNewPlaylist, getItems, getItemByNumber,addNewItem
+  ping, addNewPlaylist, getItems, getItemByNumber, addNewItem,
 } from './handler';
 import { verifyRequest } from './auth';
 
