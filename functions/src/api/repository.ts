@@ -1,74 +1,79 @@
 import { Items, Item } from '../types/items';
 import { db } from '../utils/firebase';
 
-// eslint-disable-next-line import/prefer-default-export
-export const saveItems = (uid:string, newItems: Items):void => {
+export const saveItems = async (uid:string, newItems: Items):Promise<any> => {
   console.log(newItems);
-  const docRef = db.collection('users').doc(uid);
-  db.runTransaction((transaction) => transaction.get(docRef).then((doc) => {
-    console.log('start transaction');
-    console.log(newItems);
-    if (!doc.data()) {
-      transaction.set(docRef, { items: newItems });
-    } else {
-      const data = doc.data() as {items: Items} || [];
-      const { items } = data;
-      const concatedItems = items.concat(newItems);
-      transaction.update(docRef, { items: concatedItems });
-    }
-  }).then(
-    () => { console.log('Transaction successfully committed!'); },
-  )).catch(
-    (error) => { throw new Error(error); },
-  );
+  const collectionRef = db.collection('users').doc(uid).collection('items');
+  return new Promise((resolve, reject) => {
+    // eslint-disable-next-line max-len
+    const promises:Array<Promise<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>> = [];
+    newItems.forEach((item) => {
+      console.log(item.title);
+      promises.push(collectionRef.add(item));
+    });
+
+    Promise.all(promises).then(
+      (result) => {
+        const documentPath = result.map((item) => item.id);
+        const docRef = db.collection('users').doc(uid);
+        docRef.set({ order: documentPath });
+        resolve(newItems);
+      },
+    ).catch((e) => reject(e));
+  });
 };
 
 export const getItems = (uid: string): Promise<Items> => {
   const docRef = db.collection('users').doc(uid);
-  return docRef.get().then((doc) => {
-    const data = doc.data() as {items: Items};
-    if (data) {
-      return data.items;
-    }
-    return [];
+  return new Promise((resolve, reject) => {
+    docRef.get().then((doc) => {
+      // eslint-disable-next-line max-len
+      const promises: Array<Promise<FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>>> = [];
+      const { order } = doc.data() as {order: string[]};
+      const collectionRef = db.collection('users').doc(uid).collection('items');
+      order.forEach((collectionID) => {
+        promises.push(collectionRef.doc(collectionID).get());
+      });
+      Promise.all(promises).then(
+        (result) => {
+          const data = result.map((r) => r.data() as Item);
+          console.log(data);
+          resolve(data);
+        },
+      ).catch((e) => reject(e));
+    });
   });
 };
 
-export const updateItem = (uid:string, newItem: Item, order: number):void => {
+export const updateItem = (uid:string, newItem: Item, orderNum: number):Promise<Item> => {
   const docRef = db.collection('users').doc(uid);
-  // items.forEach((item) => collectionRef.add(item));
-  db.runTransaction((transaction) => transaction.get(docRef).then((doc) => {
-    console.log(newItem);
-    if (!doc.data()) {
-      transaction.set(docRef, { items: newItem });
-    } else {
-      const data = doc.data() as {items: Items} || [];
-      const { items } = data;
-      items[order] = newItem;
-      transaction.update(docRef, { items });
-    }
-  }).then(
-    () => { console.log('Transaction successfully committed!'); },
-  )).catch(
-    (error) => { throw new Error(error); },
-  );
+  return new Promise((resolve, reject) => {
+    docRef.get().then((doc) => {
+      const { order } = doc.data() as {order: string[]};
+      const collectionRef = db.collection('users').doc(uid).collection('items');
+      collectionRef.doc(order[orderNum])
+        .set(newItem)
+        .then(
+          () => resolve(newItem),
+        ).catch((e) => reject(e));
+    });
+  });
 };
 
-export const deleteItem = (uid:string, order: number):void => {
+export const deleteItem = (uid:string, orderNum: number):Promise<boolean> => {
   const docRef = db.collection('users').doc(uid);
   // items.forEach((item) => collectionRef.add(item));
-  db.runTransaction((transaction) => transaction.get(docRef).then((doc) => {
-    if (!doc.data()) {
-      throw new Error("document doesn't exist");
-    } else {
-      const data = doc.data() as {items: Items} || [];
-      const { items } = data;
-      items.splice(order, 1);
-      transaction.update(docRef, { items });
-    }
-  }).then(
-    () => { console.log('Transaction successfully committed!'); },
-  )).catch(
-    (error) => { throw new Error(error); },
-  );
+  return new Promise((resolve, reject) => {
+    docRef.get().then((doc) => {
+      const { order } = doc.data() as {order: string[]};
+      // const collectionRef = db.collection('users').doc(uid).collection('items');
+      // collectionRef.doc(order[orderNum]).delete();
+      order.splice(orderNum, 1);
+      docRef.set({ order }).then(
+        () => resolve(true),
+      ).catch(
+        (e) => reject(e),
+      );
+    });
+  });
 };

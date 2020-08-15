@@ -42,12 +42,11 @@ export const addNewPlaylist = (
     },
   ).then(
     (playlist) => {
-      try {
-        repository.saveItems(request.params.userID, playlist);
-        response.json(playlist);
-      } catch (e) {
+      repository.saveItems(request.params.userID, playlist).then((items) => {
+        response.json(items);
+      }).catch((e) => {
         response.status(500).json(e);
-      }
+      });
     },
   ).catch((err) => {
     console.error(err);
