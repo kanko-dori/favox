@@ -1,4 +1,7 @@
 export type addNewPlaylistParams = {
-  userId: string
-  playlistID: string
+  userID: string
+}
+
+export type getParam = {
+  userID: string
 }

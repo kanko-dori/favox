@@ -2,10 +2,10 @@
 import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
-import { addNewPlaylistParams } from './types/route';
+import { addNewPlaylistParams, getParam } from './types/route';
 import { Playlist } from './types/spotify';
 import { Items } from './types/items';
-import { saveItems } from './repository';
+import * as repository from './repository';
 
 export const ping = (_request: Request, response: Response): void => {
   functions.logger.info('ping');
@@ -42,8 +42,19 @@ export const addNewPlaylist = (
     },
   ).then(
     (playlist) => {
-      saveItems(response.locals.user.uid, playlist);
+      repository.saveItems(request.params.userID, playlist);
       response.json(playlist);
+    },
+  ).catch((err) => {
+    console.error(err);
+    response.sendStatus(500);
+  });
+};
+
+export const getItems = (request: Request<getParam>, response: Response) : void => {
+  repository.getItems(request.params.userID).then(
+    (items) => {
+      response.json(items);
     },
   );
 };
