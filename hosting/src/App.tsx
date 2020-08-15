@@ -15,6 +15,6 @@ const App: React.FC = () => (
       <Redirect to="/" />
     </Switch>
   </Router>
-)
+);
 
 export default App;
