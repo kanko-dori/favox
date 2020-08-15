@@ -50,5 +50,11 @@ export const addNewPlaylist = (
     response.sendStatus(500);
   });
 };
+
+export const getItems = (request: Request, response: Response) : void => {
+  repository.getItems(response.locals.user.uid).then(
+    (items) => {
+      response.json(items);
+    },
   );
 };

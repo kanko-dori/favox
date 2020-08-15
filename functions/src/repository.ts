@@ -21,4 +21,14 @@ export const saveItems = (uid:string, newItems: Items):void => {
     (error) => console.error('Transaction failed: ', error),
   );
 };
+
+export const getItems = (uid: string): Promise<Items> => {
+  const docRef = db.collection('users').doc(uid);
+  return docRef.get().then((doc) => {
+    const data = doc.data() as {items: Items};
+    if (data) {
+      return data.items;
+    }
+    return [];
+  });
 };
