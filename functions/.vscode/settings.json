@@ -5,6 +5,6 @@
   "editor.tabSize": 2,
   "files.eol": "\n",
   "files.trimFinalNewlines": true,
-  "files.insertFinalNewline": true
-  "files.trimTrailingWhitespace": true,  // 保存時に行の終端に存在する空白文字を削除する
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true  // 保存時に行の終端に存在する空白文字を削除する
 }
