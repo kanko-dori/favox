@@ -10,6 +10,6 @@ const app = express();
 app.use(cors({}));
 firebase.initializeApp();
 
-app.get('/', ping);
+app.get('/api/', ping);
 
 exports.api = functions.https.onRequest(app);
