@@ -36,12 +36,12 @@ const FavItemDetail: React.FC<Props> = (props: Props) => {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <article className={classes.container} style={styles.container}>
+        <div className={classes.image}>
+          <img src={props.item.imageUrl} alt={props.item.imageUrl} />
+        </div>
         <div className={classes.info}>
           <h3>{props.item.title}</h3>
           <p>{props.item.description}</p>
-        </div>
-        <div className={classes.image}>
-          <img src={props.item.imageUrl} alt={props.item.imageUrl} />
         </div>
       </article>
     </Modal>
