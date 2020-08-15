@@ -3,9 +3,10 @@ import { db } from './utils/firebase';
 
 // eslint-disable-next-line import/prefer-default-export
 export const saveItems = (uid:string, newItems: Items):void => {
+  console.log(newItems);
   const docRef = db.collection('users').doc(uid);
-  // items.forEach((item) => collectionRef.add(item));
   db.runTransaction((transaction) => transaction.get(docRef).then((doc) => {
+    console.log('start transaction');
     console.log(newItems);
     if (!doc.data()) {
       transaction.set(docRef, { items: newItems });
@@ -18,7 +19,7 @@ export const saveItems = (uid:string, newItems: Items):void => {
   }).then(
     () => { console.log('Transaction successfully committed!'); },
   )).catch(
-    (error) => console.error('Transaction failed: ', error),
+    (error) => { throw new Error(error); },
   );
 };
 
