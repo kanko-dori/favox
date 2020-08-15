@@ -2,9 +2,18 @@ import React from 'react';
 
 import Header from '../components/Header';
 
-const Favox: React.FC = () => (
+interface Props {
+  match: {
+    isExact: boolean;
+    params: { [key: string]: string; }
+    path: string;
+    url: string;
+  };
+}
+
+const Favox: React.FC<Props> = (props: Props) => (
   <>
-    <Header />
+    <Header username={props.match.params.username} />
   </>
 );
 
