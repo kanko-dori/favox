@@ -1,4 +1,5 @@
 import React from 'react';
+import convert from 'color-convert';
 import { Item } from '../types/types';
 import Modal from './Modal';
 import classes from './FavItemDetail.module.css';
@@ -9,10 +10,26 @@ interface Props {
   onClose: () => void;
 }
 
+/**
+ * isDarken
+ * @param {string} color HEX color code. e.g. #ff00ca
+ * @return {boolean} Return bool that color is darken
+ */
+const isDarken = (color: string): boolean => {
+  if (!color.match(/^#[0-9a-f]{6}$/i)) throw new TypeError('Color must stats with #');
+  const hsv = convert.hex.hsv(color.substring(1));
+  const hue = Math.round(((hsv[0] + 135) % 360) / 360);
+  const saturation = hsv[1] / 100;
+  const value = hsv[2] / 100;
+  const lightness = 0.5 * hue + -0.1 * saturation + 0.4 * value;
+  return lightness < 0.5;
+};
+
 const FavItemDetail: React.FC<Props> = (props: Props) => {
   const styles = {
     container: {
       backgroundColor: props.item.color,
+      color: isDarken(props.item.color) ? 'white' : 'black',
     },
   };
 
