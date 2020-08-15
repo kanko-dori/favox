@@ -7,6 +7,11 @@ const loginWithTwitter = () => {
   const provider = new firebase.auth.TwitterAuthProvider();
   auth.signInWithPopup(provider).then((result) => {
     console.log(result);
+    if (auth.currentUser) {
+      auth.currentUser.getIdToken(true).then((idToken) => {
+        console.log(idToken);
+      });
+    }
   }).catch((error) => {
     console.error(error);
   });
