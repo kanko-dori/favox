@@ -1,19 +1,10 @@
 import React from 'react';
 import { theme } from '../utils/constants';
+import classes from './Header.module.css';
 
 const styles = {
   header: {
     backgroundColor: theme.main,
-    color: 'white',
-    padding: '16px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  divider: {
-    width: '1px',
-    height: '2em',
-    margin: '0 1em',
-    backgroundColor: 'white',
   },
 };
 
@@ -22,9 +13,9 @@ interface Props {
 }
 
 const Header: React.FC<Props> = (props: Props) => (
-  <header style={styles.header}>
+  <header style={styles.header} className={classes.header}>
     <h1>Favox</h1>
-    <div style={styles.divider} />
+    <div className={classes.divider} />
     <p>{props.username}</p>
   </header>
 );

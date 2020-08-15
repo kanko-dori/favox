@@ -1,0 +1,13 @@
+.header {
+  color: white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  width: 1px;
+  height: 2em;
+  margin: 0 1em;
+  background-color: white;
+}
