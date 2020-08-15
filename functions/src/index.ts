@@ -15,6 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/', ping);
 
 app.get('/api/secure/', verifyRequest, ping);
-app.post('/api/:userID/spotify/', addNewPlaylist);
+app.post('/api/:userID/spotify/', verifyRequest, addNewPlaylist);
 
 exports.api = functions.https.onRequest(app);
