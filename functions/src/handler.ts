@@ -91,3 +91,23 @@ export const getItemByNumber = (request: Request<getItem>, response: Response) :
     },
   );
 };
+
+export const putItemByNumber = (request: Request<getItem>, response: Response) : void => {
+  const order = parseInt(request.params.itemNumber, 10);
+  if (Number.isNaN(order)) {
+    response.sendStatus(400);
+  }
+  const item = request.body as Item;
+  console.log(item);
+  if (!item.imageURL || !item.title || !item.description || !item.url) {
+    console.log('something is lacked');
+    response.sendStatus(400);
+    return;
+  }
+  try {
+    repository.updateItem(request.params.userID, item, order);
+    response.sendStatus(200);
+  } catch (e) {
+    response.status(500).json(e);
+  }
+};

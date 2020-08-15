@@ -1,4 +1,4 @@
-import { Items } from './types/items';
+import { Items, Item } from './types/items';
 import { db } from './utils/firebase';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -32,4 +32,24 @@ export const getItems = (uid: string): Promise<Items> => {
     }
     return [];
   });
+};
+
+export const updateItem = (uid:string, newItem: Item, order: number):void => {
+  const docRef = db.collection('users').doc(uid);
+  // items.forEach((item) => collectionRef.add(item));
+  db.runTransaction((transaction) => transaction.get(docRef).then((doc) => {
+    console.log(newItem);
+    if (!doc.data()) {
+      transaction.set(docRef, { items: newItem });
+    } else {
+      const data = doc.data() as {items: Items} || [];
+      const { items } = data;
+      items[order] = newItem;
+      transaction.update(docRef, { items });
+    }
+  }).then(
+    () => { console.log('Transaction successfully committed!'); },
+  )).catch(
+    (error) => { throw new Error(error); },
+  );
 };
