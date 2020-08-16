@@ -28,8 +28,8 @@ const isDarken = (color: string): boolean => {
 const FavItemDetail: React.FC<Props> = (props: Props) => {
   const styles = {
     container: {
-      backgroundColor: props.item.color,
-      color: isDarken(props.item.color) ? 'white' : 'black',
+      backgroundColor: props.item.color || '#c0ffee',
+      color: isDarken(props.item.color || '#c0ffee') ? 'white' : 'black',
     },
   };
 
@@ -37,7 +37,7 @@ const FavItemDetail: React.FC<Props> = (props: Props) => {
     <Modal open={props.open} onClose={props.onClose}>
       <article className={classes.container} style={styles.container}>
         <div className={classes.image}>
-          <img src={props.item.imageUrl} alt={props.item.imageUrl} />
+          <img src={props.item.imageURL} alt={props.item.imageURL} />
         </div>
         <div className={classes.info}>
           <h3>{props.item.title}</h3>
