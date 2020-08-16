@@ -5,8 +5,9 @@ import { auth } from '../utils/firebase';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import TwitterLoginButton from '../components/TwitterLoginButton';
+import { useHistory } from 'react-router-dom';
 
-const loginWithTwitter = () => {
+const loginWithTwitter = (history: (path: string) => void) => {
   const provider = new firebase.auth.TwitterAuthProvider();
   auth.signInWithPopup(provider).then((result) => {
     console.log(result);
@@ -14,14 +15,17 @@ const loginWithTwitter = () => {
       auth.currentUser.getIdToken(true).then((idToken) => {
         console.log(idToken);
       });
+      history(`/${result.additionalUserInfo?.username}`)
     }
   }).catch((error) => {
     console.error(error);
   });
 };
 
-const Home: React.FC = () => (
-  <>
+const Home: React.FC = () => {
+  const history = useHistory();
+  return(
+    <>
     <Header style={{ position: 'fixed', width: '100vw', zIndex: 1000 }} />
     <div className={classes.container}>
       <div className={classes.image}>
@@ -31,12 +35,13 @@ const Home: React.FC = () => (
         <div>
           <p>「好き」を共有しませんか？</p>
           <h3>What is your favorite?</h3>
-          <TwitterLoginButton onClick={() => loginWithTwitter()} />
+          <TwitterLoginButton onClick={() => loginWithTwitter(history.push)} />
         </div>
       </section>
     </div>
-    <Button onClick={loginWithTwitter}>login</Button>
   </>
-);
+  )
+
+};
 
 export default Home;
