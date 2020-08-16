@@ -12,7 +12,7 @@ interface Props {
 const EditItem: React.FC<Props> = (props: Props) => {
   const [image, setImageUrl] = useState('');
   const onSubmit = () => {
-
+    console.log('onsubmit');
   };
   return (
     <Modal open={props.open} onClose={props.onClose}>
@@ -30,9 +30,9 @@ const EditItem: React.FC<Props> = (props: Props) => {
         </div>
         <form className={classes.form} onSubmit={onSubmit}>
           <div className={classes.textfields}>
-            <h3><input type="text" placeholder="Title" className={classes.title} required /></h3>
-            <p><input type="text" placeholder="URL" className={classes.url} /></p>
-            <p><textarea placeholder="Why do you love this?" className={classes.description} required /></p>
+            <h3><input type="text" placeholder="Title" className={classes.title} required defaultValue={props.item?.title} /></h3>
+            <p><input type="text" placeholder="URL" className={classes.url} defaultValue={props.item?.url} /></p>
+            <p><textarea placeholder="Why do you love this?" className={classes.description} required defaultValue={props.item?.description} /></p>
             <p className={classes.footer}>
               <div className={classes.uploader}>
                 <label htmlFor="file_uploader">

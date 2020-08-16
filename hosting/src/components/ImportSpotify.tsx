@@ -6,7 +6,7 @@ import classes from './ImportSpotify.module.css';
 const ImportSpotify: React.FC = () => {
   const [open, setOpen] = useState(false);
   const onSubmit = () => {
-
+    console.log('import spotify');
   };
   return (
     <>
