@@ -10,7 +10,7 @@ interface Props {
 }
 
 const EditItem: React.FC<Props> = (props: Props) => {
-  const [image, setImageUrl] = useState('');
+  // const [image, setImageUrl] = useState('');
   const onSubmit = () => {
     console.log('onsubmit');
   };
