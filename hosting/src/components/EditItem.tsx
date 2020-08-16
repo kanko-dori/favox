@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React/* , { useState } */ from 'react';
 import { Item } from '../types/types';
 import Modal from './Modal';
 import classes from './EditItem.module.css';
