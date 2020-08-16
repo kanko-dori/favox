@@ -1,6 +1,6 @@
 .button {
   position: fixed;
-  bottom: calc(4em + 64px);
+  bottom: /* calc(4em + 64px) */3em;
   right: 3em;
   width: 64px;
   height: 64px;
