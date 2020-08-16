@@ -29,7 +29,7 @@ const Favox: React.FC<Props> = (props: Props) => {
         setData(newdata);
       },
     ).catch((e) => console.error(e));
-  }, []);
+  }, [props.match.params.username]);
   const { username } = props.match.params;
   return (
     <>
