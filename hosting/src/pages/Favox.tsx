@@ -40,7 +40,7 @@ const Favox: React.FC<Props> = (props: Props) => {
           (data !== []) && data.map((item) => <FavItem key={item.title} item={item} />)
         }
       </div>
-      <PostItem />
+      {/* <PostItem /> */}
       <ImportSpotify username={username} />
     </>
   );
