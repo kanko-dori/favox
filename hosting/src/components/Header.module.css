@@ -11,3 +11,12 @@
   margin: 0 1em;
   background-color: white;
 }
+
+.spacer {
+  flex-grow: 1;
+}
+
+.share {
+  padding: 0.25em;
+  cursor: pointer;
+}
