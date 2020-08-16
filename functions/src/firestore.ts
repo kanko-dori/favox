@@ -5,6 +5,10 @@ import * as vision from '@google-cloud/vision';
 import { Item } from './types/items';
 import { db } from './utils/firebase';
 
+const padding = (colorCode: string):string => {
+  const c = `0${colorCode}`;
+  return c.slice(-2);
+};
 // eslint-disable-next-line import/prefer-default-export
 export const documentOnUpdate = (
   change: Change<firestore.DocumentSnapshot>,
@@ -92,7 +96,7 @@ export const documentOnUpdate = (
 
       logger.log(`背景色に明度を落とした色を提案｛R:${downbrightR},G:${downbrightG},B:${downbrightB}}`);
 
-      const colorcode = `#${downbrightR.toString(16)}${downbrightG.toString(16)}${downbrightB.toString(16)}`;
+      const colorcode = `#${padding(downbrightR.toString(16))}${padding(downbrightG.toString(16))}${padding(downbrightB.toString(16))}`;
       logger.log(colorcode);
       db.collection('users')
         .doc(userId)
