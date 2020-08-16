@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import { Item } from '../types/types';
 import FavItem from '../components/FavItem';
 import classes from './Favox.module.css';
-import PostItem from '../components/PostItem';
+// import PostItem from '../components/PostItem';
 import ImportSpotify from '../components/ImportSpotify';
 import UserHead from '../components/UserHead';
 
