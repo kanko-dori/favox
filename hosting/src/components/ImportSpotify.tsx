@@ -7,8 +7,11 @@ import { auth } from '../utils/firebase';
 type Props = {
   username: string
 }
+
+const isValidUrl = (url: string): boolean => !!url.match(/https:\/\/open\.spotify\.com\/playlist\/[0-9a-z]+/);
 const submitSpotify = (url: string, username: string) => {
   console.log(url); // https://open.spotify.com/playlist/1ZtNC59k667YeEaeWuIMCH?si=ZNfRAi4FS0iG5eL5PBZRBw
+  if (!isValidUrl(url)) return;
   console.log('import spotify');
   const splitURL = url.split('?')[0].split('/');
   const playlistID = splitURL[splitURL.length - 1];
@@ -37,7 +40,6 @@ const submitSpotify = (url: string, username: string) => {
 const ImportSpotify: React.FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [spotifyURL, setSpotifyURL] = useState('');
-  // const onSubmit = () => {};
 
   return (
     <>
