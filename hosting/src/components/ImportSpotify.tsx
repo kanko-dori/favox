@@ -12,6 +12,10 @@ const submitSpotify = (url: string, username: string) => {
   console.log('import spotify');
   const splitURL = url.split('?')[0].split('/')
   const playlistID = splitURL[splitURL.length-1]
+  if(!playlistID){
+    console.error("not found: playlistID")
+    return
+  }
 
   auth.currentUser?.getIdToken().then(token => {
     const headers = {
@@ -20,7 +24,6 @@ const submitSpotify = (url: string, username: string) => {
     }
     const body = JSON.stringify({playlistID})
     const method = "POST"
-    console.log({method, headers,body})
     fetch(`https://us-central1-favoxes.cloudfunctions.net/api/api/${username}/spotify`,{method, headers,body}).then(
       response => response.json()
     ).then(
@@ -33,9 +36,7 @@ const submitSpotify = (url: string, username: string) => {
 const ImportSpotify: React.FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [spotifyURL, setSpotifyURL] = useState('')
-  const onSubmit = () => {
-
-  };
+  const onSubmit = () => {};
 
   return (
     <>
