@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { theme } from '../utils/constants';
 import classes from './Header.module.css';
+import { copyText } from '../utils/utils';
 
 const styles = {
   header: {
@@ -13,6 +14,8 @@ interface Props {
   style?: CSSProperties;
 }
 
+const generateShareUrl = () => `${window.location.origin}/share${window.location.pathname}`;
+
 const Header: React.FC<Props> = (props: Props) => (
   <header style={{ ...styles.header, ...props.style }} className={classes.header}>
     <h1>Favox</h1>
@@ -24,6 +27,15 @@ const Header: React.FC<Props> = (props: Props) => (
         </>
       )
     }
+    <div className={classes.spacer} />
+    <div
+      className={classes.share}
+      role="button"
+      aria-hidden
+      onClick={() => copyText(generateShareUrl())}
+    >
+      <img src="/assets/share.svg" alt="Share" />
+    </div>
   </header>
 );
 
