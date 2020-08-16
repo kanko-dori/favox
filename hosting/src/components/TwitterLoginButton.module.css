@@ -1,0 +1,19 @@
+.button {
+  background: #1DA1F2;
+  color: white;
+  padding: 0.5em 1em;
+  font-size: 1.25em;
+  border-radius: 1.5em;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+  display: inline-block;
+  width: auto;
+}
+.buttoncontents {
+  display: inline-flex;
+  align-items: flex-end;
+}
+.icon {
+  margin-right: 0.5em;
+  height: 1.25em;
+}

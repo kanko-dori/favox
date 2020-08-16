@@ -9,3 +9,6 @@ node_modules/
 
 # ESLint setting file
 !.eslintrc.js
+# cloud function runtime config 
+# firebase functions:config:get > .runtimeconfig.json
+.runtimeconfig.json

@@ -1,15 +1,9 @@
 import * as functions from 'firebase-functions';
-import * as firebase from 'firebase-admin';
-
-import * as express from 'express';
-import * as cors from 'cors';
-
-import { ping } from './handler';
-
-const app = express();
-app.use(cors({}));
-firebase.initializeApp();
-
-app.get('/api/', ping);
+import app from './api/api';
+import { documentOnUpdate } from './firestore';
 
 exports.api = functions.https.onRequest(app);
+
+exports.useWildcard = functions.firestore
+  .document('users/{userId}/items/{itemId}')
+  .onWrite(documentOnUpdate);
