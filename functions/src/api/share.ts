@@ -28,7 +28,7 @@ app.get('/share/:username', (req: express.Request, res: express.Response) => {
     <body>
       <p>自動で遷移しない場合、<a href="/${username}">こちら</a>をクリックしてください。</p>
       <script>
-        location.replace('/${username});
+        location.replace('/${username}');
       </script>
     </body>
     </html>
