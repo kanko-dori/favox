@@ -6,6 +6,7 @@ import FavItem from '../components/FavItem';
 import classes from './Favox.module.css';
 import PostItem from '../components/PostItem';
 import ImportSpotify from '../components/ImportSpotify';
+import UserHead from '../components/UserHead';
 
 interface Props {
   match: {
@@ -18,6 +19,7 @@ interface Props {
 
 const Favox: React.FC<Props> = (props: Props) => (
   <>
+    <UserHead username={props.match.params.username} />
     <Header username={props.match.params.username} />
     <div className={classes.container}>
       {
