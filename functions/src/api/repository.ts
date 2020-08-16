@@ -1,14 +1,15 @@
+import { logger } from 'firebase-functions';
 import { Items, Item } from '../types/items';
 import { db } from '../utils/firebase';
 
 export const saveItems = async (uid:string, newItems: Items):Promise<any> => {
-  console.log(newItems);
+  logger.log(newItems);
   const collectionRef = db.collection('users').doc(uid).collection('items');
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line max-len
     const promises:Array<Promise<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>> = [];
     newItems.forEach((item) => {
-      console.log(item.title);
+      logger.log(item.title);
       promises.push(collectionRef.add(item));
     });
 
@@ -37,7 +38,7 @@ export const getItems = (uid: string): Promise<Items> => {
       Promise.all(promises).then(
         (result) => {
           const data = result.map((r) => r.data() as Item);
-          console.log(data);
+          logger.log(data);
           resolve(data);
         },
       ).catch((e) => reject(e));
