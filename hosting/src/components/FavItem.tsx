@@ -9,6 +9,7 @@ interface Props {
 
 const FavItem: React.FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
+  console.log(props.item.imageURL)
   return (
     <>
       <div
@@ -19,7 +20,7 @@ const FavItem: React.FC<Props> = (props: Props) => {
         onClick={() => setOpen(true)}
         aria-hidden="true"
       >
-        <img src={props.item.imageUrl} alt={props.item.title} />
+        <img src={props.item.imageURL} alt={props.item.title} />
       </div>
       <FavItemDetail open={open} onClose={() => setOpen(false)} item={props.item} />
     </>

@@ -51,7 +51,7 @@ const EditItem: React.FC<Props> = (props: Props) => {
 };
 EditItem.defaultProps = {
   item: {
-    imageUrl: '',
+    imageURL: '',
     url: '',
     title: '',
     description: '',

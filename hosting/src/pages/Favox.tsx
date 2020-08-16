@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Header from '../components/Header';
 import { Item } from '../types/types';
@@ -16,33 +16,33 @@ interface Props {
   };
 }
 
-const Favox: React.FC<Props> = (props: Props) => (
+
+const Favox: React.FC<Props> = (props: Props) => {
+  const [data, setData] = useState<Array<Item>>([])
+  useEffect(() => {
+    console.log('fetch',`/api/${props.match.params.username}`)
+    fetch(`https://us-central1-favoxes.cloudfunctions.net/api/api/${props.match.params.username}`).then(
+      response => response.json()
+    ).then(
+      data => {
+        console.log(data)
+        setData(data)
+      }
+    ).catch(e => console.error(e))
+  },[])
+
+  return (
   <>
     <Header username={props.match.params.username} />
     <div className={classes.container}>
+      {console.log('daat',data)}
       {
-        ([
-          {
-            title: 'test1', description: 'this is my favorite things', imageUrl: 'https://img.cdn.nimg.jp/s/nicovideo/thumbnails/32687696/32687696.original/r1280x720l?key=323a59de649e570af7f7d5df1d656c6d3dd23e9d13db7ee182a710ea07675402', color: '#ff0000',
-          },
-          {
-            title: 'test2', description: 'this is my favorite things', imageUrl: 'https://img.cdn.nimg.jp/s/nicovideo/thumbnails/32687696/32687696.original/r1280x720l?key=323a59de649e570af7f7d5df1d656c6d3dd23e9d13db7ee182a710ea07675402', color: '#aaff00',
-          },
-          {
-            title: 'test3', description: 'this is my favorite things', imageUrl: 'https://img.cdn.nimg.jp/s/nicovideo/thumbnails/32687696/32687696.original/r1280x720l?key=323a59de649e570af7f7d5df1d656c6d3dd23e9d13db7ee182a710ea07675402', color: '#ff00ff',
-          },
-          {
-            title: 'test4', description: 'this is my favorite things', imageUrl: 'https://img.cdn.nimg.jp/s/nicovideo/thumbnails/32687696/32687696.original/r1280x720l?key=323a59de649e570af7f7d5df1d656c6d3dd23e9d13db7ee182a710ea07675402', color: '#ff00aa',
-          },
-          {
-            title: 'test5', description: 'this is my favorite things', imageUrl: 'https://img.cdn.nimg.jp/s/nicovideo/thumbnails/32687696/32687696.original/r1280x720l?key=323a59de649e570af7f7d5df1d656c6d3dd23e9d13db7ee182a710ea07675402', color: '#ffffaa',
-          },
-        ] as Item[]).map((item) => <FavItem key={item.title} item={item} />)
+        (data !== []) && data.map((item) => <FavItem key={item.title} item={item} />)
       }
     </div>
     <PostItem />
     <ImportSpotify />
   </>
-);
+)};
 
 export default Favox;

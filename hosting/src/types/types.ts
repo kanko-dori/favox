@@ -1,5 +1,5 @@
 export type Item = {
-  imageUrl: string,
+  imageURL: string,
   title: string,
   description: string,
   url: string,
