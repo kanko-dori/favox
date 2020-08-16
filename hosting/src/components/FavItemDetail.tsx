@@ -16,7 +16,7 @@ interface Props {
  * @return {boolean} Return bool that color is darken
  */
 const isDarken = (color: string): boolean => {
-  if (!color.match(/^#[0-9a-f]{6}$/i)) throw new TypeError('Color must stats with #');
+  if (!color.match(/^#[0-9a-f]{6}$/i)) return false;
   const hsv = convert.hex.hsv(color.substring(1));
   const hue = Math.round(((hsv[0] + 135) % 360) / 360);
   const saturation = hsv[1] / 100;
