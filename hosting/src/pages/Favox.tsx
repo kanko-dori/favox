@@ -41,7 +41,7 @@ const Favox: React.FC<Props> = (props: Props) => {
       }
     </div>
     <PostItem />
-    <ImportSpotify />
+    <ImportSpotify username={props.match.params.username}/>
   </>
 )};
 
