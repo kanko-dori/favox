@@ -1,8 +1,8 @@
 import * as functions from 'firebase-functions';
-import app from './api/api';
+import api from './api/api';
 import { documentOnUpdate } from './firestore';
 
-exports.api = functions.https.onRequest(app);
+exports.api = functions.https.onRequest(api);
 
 exports.useWildcard = functions.firestore
   .document('users/{userId}/items/{itemId}')
