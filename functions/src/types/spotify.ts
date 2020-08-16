@@ -44,7 +44,8 @@ export interface Track {
   episode: boolean;
   explicit: boolean;
   externalIds: ExternalIDS;
-  externalUrls: ExternalUrls;
+  // eslint-disable-next-line camelcase
+  external_urls: ExternalUrls;
   href: string;
   id: string;
   isLocal: boolean;
