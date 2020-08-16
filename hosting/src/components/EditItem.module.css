@@ -1,0 +1,86 @@
+.container {
+  width: 80vw;
+  padding: 3em;
+}
+
+.header {
+  display: flex;
+}
+.header h3 {
+  font-size: 2em;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.close {
+  position: relative;
+  width: 64px;
+  cursor: pointer;
+}
+.close::before, .close::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background-color: black;
+}
+
+.close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.form h3,
+.form p {
+  margin-top: 1em;
+}
+.form input,
+.form textarea {
+  outline: none;
+  border: 0;
+  width: 90%;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1px;
+}
+.form input:focus,
+.form textarea:focus {
+  border-bottom: 2px solid #ffcc33;
+  padding-bottom: 0;
+}
+
+.title {
+  font-size: 1.5em;
+}
+.description {
+  resize: none;
+  height: 3em;
+}
+
+.footer {
+  display: flex;
+}
+.uploader label {
+  height: 2em;
+  color: white;
+  background-color: #ffcc33;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+.uploader input[type='file'] {
+  display: none;
+}
+.form .submit {
+  height: 2em;
+  color: white;
+  background-color: #ffcc33;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  font-size: 1em;
+  width: 5em;
+}

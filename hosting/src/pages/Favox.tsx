@@ -4,6 +4,8 @@ import Header from '../components/Header';
 import { Item } from '../types/types';
 import FavItem from '../components/FavItem';
 import classes from './Favox.module.css';
+import PostItem from '../components/PostItem';
+import ImportSpotify from '../components/ImportSpotify';
 
 interface Props {
   match: {
@@ -38,6 +40,8 @@ const Favox: React.FC<Props> = (props: Props) => (
         ] as Item[]).map((item) => <FavItem key={item.title} item={item} />)
       }
     </div>
+    <PostItem />
+    <ImportSpotify />
   </>
 );
 
