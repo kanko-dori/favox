@@ -36,7 +36,7 @@ export const addNewPlaylist = (
         imageURL: item.track.album.images[0].url,
         title: item.track.name,
         description: '',
-        url: item.track.externalUrls.spotify,
+        url: item.track.external_urls.spotify || '',
         color: '',
       }));
       return playlist;
