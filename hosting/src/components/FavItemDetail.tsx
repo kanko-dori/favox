@@ -41,6 +41,21 @@ const FavItemDetail: React.FC<Props> = (props: Props) => {
         </div>
         <div className={classes.info}>
           <h3>{props.item.title}</h3>
+          {
+            props.item.url
+            && (
+              <p className={classes.url}>
+                <a
+                  href={props.item.url}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                  style={{ color: isDarken(props.item.color || '#c0ffee') ? 'white' : 'black' }}
+                >
+                  {props.item.url}
+                </a>
+              </p>
+            )
+          }
           <p>{props.item.description}</p>
         </div>
       </article>
