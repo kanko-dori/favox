@@ -2,6 +2,7 @@
 import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
+import { logger } from 'firebase-functions';
 import { addNewPlaylistParams, getParam, getItem } from '../types/route';
 import { Playlist } from '../types/spotify';
 import { Items, Item } from '../types/items';
@@ -64,9 +65,9 @@ export const getItems = (request: Request<getParam>, response: Response) : void 
 
 export const addNewItem = (request: Request<getParam>, response: Response): void => {
   const item = request.body as Item;
-  console.log(item);
+  logger.log(item);
   if (!item.imageURL || !item.title || !item.description || !item.url) {
-    console.log('something is lacked');
+    logger.log('something is lacked');
     response.sendStatus(400);
     return;
   }
@@ -97,18 +98,15 @@ export const putItemByNumber = (request: Request<getItem>, response: Response) :
     response.sendStatus(400);
   }
   const item = request.body as Item;
-  console.log(item);
+  logger.log(item);
   if (!item.imageURL || !item.title || !item.description || !item.url) {
-    console.log('something is lacked');
+    logger.log('something is lacked');
     response.sendStatus(400);
     return;
   }
-  try {
-    repository.updateItem(request.params.userID, item, order);
-    response.sendStatus(200);
-  } catch (e) {
-    response.status(500).json(e);
-  }
+  repository.updateItem(request.params.userID, item, order)
+    .then(() => response.sendStatus(200))
+    .catch((e) => response.status(500).json(e));
 };
 
 export const deleteItemByNumber = (request: Request<getItem>, response: Response) : void => {
@@ -117,10 +115,7 @@ export const deleteItemByNumber = (request: Request<getItem>, response: Response
     response.sendStatus(400);
   }
 
-  try {
-    repository.deleteItem(request.params.userID, order);
-    response.sendStatus(200);
-  } catch (e) {
-    response.status(500).json(e);
-  }
+  repository.deleteItem(request.params.userID, order)
+    .then(() => response.sendStatus(200))
+    .catch((e) => response.status(500).json(e));
 };
