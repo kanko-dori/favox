@@ -7,6 +7,7 @@ import classes from './Favox.module.css';
 // import PostItem from '../components/PostItem';
 import ImportSpotify from '../components/ImportSpotify';
 import UserHead from '../components/UserHead';
+import LoadIcon from '../components/LoadIcon';
 
 interface Props {
   match: {
@@ -35,6 +36,10 @@ const Favox: React.FC<Props> = (props: Props) => {
     <>
       <UserHead username={props.match.params.username} />
       <Header username={props.match.params.username} />
+      {
+        (data.length === 0)
+        && <LoadIcon />
+      }
       <div className={classes.container}>
         {
           (data !== []) && data.map((item) => <FavItem key={item.title} item={item} />)
