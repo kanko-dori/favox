@@ -16,33 +16,33 @@ interface Props {
   };
 }
 
-
 const Favox: React.FC<Props> = (props: Props) => {
-  const [data, setData] = useState<Array<Item>>([])
+  const [data, setData] = useState<Array<Item>>([]);
   useEffect(() => {
-    console.log('fetch',`/api/${props.match.params.username}`)
+    console.log('fetch', `/api/${props.match.params.username}`);
     fetch(`https://us-central1-favoxes.cloudfunctions.net/api/api/${props.match.params.username}`).then(
-      response => response.json()
+      (response) => response.json(),
     ).then(
-      data => {
-        console.log(data)
-        setData(data)
-      }
-    ).catch(e => console.error(e))
-  },[])
-
+      (newdata) => {
+        console.log(newdata);
+        setData(newdata);
+      },
+    ).catch((e) => console.error(e));
+  }, []);
+  const { username } = props.match.params;
   return (
-  <>
-    <Header username={props.match.params.username} />
-    <div className={classes.container}>
-      {console.log('daat',data)}
-      {
+    <>
+      <Header username={username} />
+      <div className={classes.container}>
+        {console.log('daat', data)}
+        {
         (data !== []) && data.map((item) => <FavItem key={item.title} item={item} />)
       }
-    </div>
-    <PostItem />
-    <ImportSpotify username={props.match.params.username}/>
-  </>
-)};
+      </div>
+      <PostItem />
+      <ImportSpotify username={username} />
+    </>
+  );
+};
 
 export default Favox;

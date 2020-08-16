@@ -8,35 +8,36 @@ type Props = {
   username: string
 }
 const submitSpotify = (url: string, username: string) => {
-  console.log(url) // https://open.spotify.com/playlist/1ZtNC59k667YeEaeWuIMCH?si=ZNfRAi4FS0iG5eL5PBZRBw
+  console.log(url); // https://open.spotify.com/playlist/1ZtNC59k667YeEaeWuIMCH?si=ZNfRAi4FS0iG5eL5PBZRBw
   console.log('import spotify');
-  const splitURL = url.split('?')[0].split('/')
-  const playlistID = splitURL[splitURL.length-1]
-  if(!playlistID){
-    console.error("not found: playlistID")
-    return
+  const splitURL = url.split('?')[0].split('/');
+  const playlistID = splitURL[splitURL.length - 1];
+  if (!playlistID) {
+    console.error('not found: playlistID');
+    return;
   }
 
-  auth.currentUser?.getIdToken().then(token => {
+  // eslint-disable-next-line no-unused-expressions
+  auth.currentUser?.getIdToken().then((token) => {
     const headers = {
-      "Authorization": `Bearer ${token}`,
-      "Content-Type": "application/json"
-    }
-    const body = JSON.stringify({playlistID})
-    const method = "POST"
-    fetch(`https://us-central1-favoxes.cloudfunctions.net/api/api/${username}/spotify`,{method, headers,body}).then(
-      response => response.json()
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+    const body = JSON.stringify({ playlistID });
+    const method = 'POST';
+    fetch(`https://us-central1-favoxes.cloudfunctions.net/api/api/${username}/spotify`, { method, headers, body }).then(
+      (response) => response.json(),
     ).then(
-      data => console.log(data)
+      (data) => console.log(data),
     ).catch(
-      e => console.error(e)
-    )
-  })
-}
+      (e) => console.error(e),
+    );
+  });
+};
 const ImportSpotify: React.FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
-  const [spotifyURL, setSpotifyURL] = useState('')
-  const onSubmit = () => {};
+  const [spotifyURL, setSpotifyURL] = useState('');
+  // const onSubmit = () => {};
 
   return (
     <>
@@ -54,12 +55,12 @@ const ImportSpotify: React.FC<Props> = (props: Props) => {
               aria-label="close"
             />
           </div>
-          <form className={classes.form} onSubmit={onSubmit}>
+          <form className={classes.form}>
             <div className={classes.textfields}>
-              <h3><input type="text" placeholder="Spotify playlist URL" className={classes.title} required value={spotifyURL} onChange={e => setSpotifyURL(e.target.value)}/></h3>
+              <h3><input type="text" placeholder="Spotify playlist URL" className={classes.title} required value={spotifyURL} onChange={(e) => setSpotifyURL(e.target.value)} /></h3>
               <p className={classes.footer}>
                 <div className={classes.spacer} />
-                <div><input type="submit" value="SEND" className={classes.submit} onClick={e => {e.preventDefault();submitSpotify(spotifyURL, props.username)}}/></div>
+                <div><input type="submit" value="SEND" className={classes.submit} onClick={(e) => { e.preventDefault(); submitSpotify(spotifyURL, props.username); }} /></div>
               </p>
             </div>
           </form>

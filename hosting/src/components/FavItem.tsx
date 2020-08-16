@@ -9,7 +9,7 @@ interface Props {
 
 const FavItem: React.FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
-  console.log(props.item.imageURL)
+  console.log(props.item.imageURL);
   return (
     <>
       <div
