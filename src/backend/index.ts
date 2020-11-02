@@ -1,21 +1,18 @@
 import * as functions from 'firebase-functions';
+import express from 'express';
 import next from 'next';
 
+const server = express();
 const nextjsServer = next({
-  conf: {
-    distDir: 'lib/next',
-  },
+  conf: { distDir: 'lib/next' },
 });
 const nextjsHandle = nextjsServer.getRequestHandler();
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info('Hello logs!', { structuredData: true });
-  response.send('Hello from Firebase!');
+server.all('/**', (req, res, next) => {
+  nextjsServer
+    .prepare()
+    .then(() => nextjsHandle(req, res))
+    .then(next);
 });
 
-export const nextApp = functions.https.onRequest((req, res) => {
-  return nextjsServer.prepare().then(() => nextjsHandle(req, res));
-});
+export const app = functions.https.onRequest(server);
