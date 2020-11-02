@@ -15,7 +15,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
     'prettier/@typescript-eslint', // Prettier plugin
-    'plugin:prettier/recommended', // Prettier recommended rules 
+    'plugin:prettier/recommended', // Prettier recommended rules
   ],
   rules: {
     'react/prop-types': 'off',
