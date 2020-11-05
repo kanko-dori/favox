@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions';
 import express from 'express';
+import * as functions from 'firebase-functions';
 import next from 'next';
 
 const server = express();
