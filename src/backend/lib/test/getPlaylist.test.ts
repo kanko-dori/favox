@@ -7,6 +7,6 @@ describe('getPlaylist', () => {
   });
 
   it('不正なplaylistIdからPlaylistを取得できない', () => {
-    expect(getSpotifyPlaylist('watamokosan')).rejects.toThrow('Invalid playlist Id');
+    expect(getSpotifyPlaylist('INVALID_PLAYLIST_ID')).rejects.toThrow('Invalid playlist Id');
   });
 });
