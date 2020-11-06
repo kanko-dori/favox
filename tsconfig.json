@@ -9,8 +9,9 @@
     "esModuleInterop": true,
     "target": "es2017",
     "types": [
-      "spotify-api"
-    ]
+      "spotify-api",
+      "jest"
+    ],
   },
   "compileOnSave": true,
   "include": [
