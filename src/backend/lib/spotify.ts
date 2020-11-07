@@ -1,15 +1,24 @@
-import * as express from 'express';
+import { Request, Response } from 'express';
 import fetch from 'node-fetch';
 import * as functions from 'firebase-functions';
+
+import { spotifyTokenResponse, SpotifyUserResponse } from '../../types';
 
 const CLIENT_ID = functions.config().spotify.client_id;
 const CLIENT_SECRET = functions.config().spotify.client_secret;
 const REDIRECT_URI = functions.config().spotify.redirect_uri;
 
-export const handleLogin = async (req: express.Request, res: express.Response): Promise<void> => {
+export const handleLogin = async (req: Request, res: Response): Promise<void> => {
   console.log(req.query);
   const code = req.query.code as string;
   // const state = req.query.state as string;
+
+  const { accessToken } = await getToken(code);
+  const userData = await getUserInfomation(accessToken);
+  console.log(userData);
+
+  res.redirect('/');
+};
 
 export const getToken = async (
   code: string
