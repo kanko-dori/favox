@@ -1,6 +1,4 @@
 import { getToken, getUserInfomation } from '../spotify';
-// import fetch from 'node-fetch';
-// import * as sinon from 'sinon';
 import { get, post, reset } from 'fetch-mock';
 import { SpotifyUserResponse } from '../../../types';
 
