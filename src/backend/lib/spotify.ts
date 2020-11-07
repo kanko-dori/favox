@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import fetch from 'node-fetch';
+import 'node-fetch';
 import * as functions from 'firebase-functions';
 
 import { spotifyTokenResponse, SpotifyUserResponse } from '../../types';
