@@ -39,6 +39,12 @@ export const getToken = async (
   }
 };
 
-      res.redirect('/');
-    });
+export const getUserInfomation = async (accessToken: string): Promise<SpotifyUserResponse> => {
+  const userDataResponse = await fetch('https://api.spotify.com/v1/me', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return (await userDataResponse.json()) as SpotifyUserResponse;
 };
