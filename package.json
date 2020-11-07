@@ -6,7 +6,7 @@
     "build:front": "next build src/frontend",
     "watch:back": "tsc --watch",
     "serve": "run-s build emulator",
-    "emulator": "firebase emulators:start --only functions",
+    "emulator": "firebase emulators:start",
     "deploy": "firebase deploy",
     "logs": "firebase functions:log",
     "dev": "next src/frontend",
