@@ -11,25 +11,33 @@ export const handleLogin = async (req: express.Request, res: express.Response): 
   const code = req.query.code as string;
   // const state = req.query.state as string;
 
+export const getToken = async (
+  code: string
+): Promise<{ accessToken: string; refreshToken: string }> => {
   const params = new URLSearchParams();
   params.append('code', code);
   params.append('redirect_uri', REDIRECT_URI);
   params.append('grant_type', 'authorization_code');
+  try {
+    const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'post',
+      headers: {
+        Authorization: 'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params,
+    });
 
-  fetch('https://accounts.spotify.com/api/token', {
-    method: 'post',
-    headers: {
-      Authorization: 'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: params,
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json);
-      const accessToken = json.access_token;
-      const refreshToken = json.refresh_token;
-      console.log(`accessToken: ${accessToken}, refreshToken: ${refreshToken}`);
+    const responseBody = (await tokenResponse.json()) as spotifyTokenResponse;
+    console.log(responseBody);
+    const accessToken = responseBody.access_token;
+    const refreshToken = responseBody.refresh_token;
+
+    return { accessToken, refreshToken };
+  } catch (e) {
+    throw new Error(e);
+  }
+};
 
       res.redirect('/');
     });
