@@ -12,7 +12,7 @@ const collection = jest
   .mockReturnValue(({ doc } as unknown) as any);
 
 describe('saveUserAndSpotifyUser', () => {
-  it('200', async () => {
+  it('successfully call firestore functions', async () => {
     await saveUserAndSpotifyUser(
       'UID',
       ({ id: 'TEST_ID' } as unknown) as SpotifyUserResponse,
