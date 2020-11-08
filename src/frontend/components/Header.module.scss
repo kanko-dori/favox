@@ -1,0 +1,24 @@
+.header {
+  background: var(--main-color);
+  color: var(--white);
+
+  display: flex;
+  align-items: center;
+
+  .favox {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--white);
+
+    user-select: none;
+  }
+  .divider {
+    height: 2rem;
+    width: 1px;
+    background-color: var(--white);
+    margin-right: 1rem;
+  }
+  .title {
+    font-size: 1.2rem;
+  }
+}
