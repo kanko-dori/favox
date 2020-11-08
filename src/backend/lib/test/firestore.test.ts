@@ -8,6 +8,7 @@ const set = jest.fn();
 const doc = jest.fn(() => ({ update, set }));
 const collection = jest
   .spyOn(admin.firestore(), 'collection')
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   .mockReturnValue(({ doc } as unknown) as any);
 
 describe('saveUserAndSpotifyUser', () => {
