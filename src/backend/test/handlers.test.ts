@@ -16,7 +16,7 @@ describe('spotifyCallbackHandler', () => {
     .spyOn(spotify, 'getUserInfomation')
     .mockReturnValueOnce(Promise.resolve({ id: 'TEST_ID' } as SpotifyUserResponse));
 
-  it('successfully redirected to /', async () => {
+  it('successfully redirected to /loading', async () => {
     const req = {
       query: {
         code: 'TEST_CODE',

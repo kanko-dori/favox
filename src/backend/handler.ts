@@ -10,8 +10,8 @@ export const spotifyCallbackHandler = async (req: Request, res: Response): Promi
     const userData = await getUserInfomation(accessToken);
     await saveUserAndSpotifyUser(uid, userData, accessToken, refreshToken);
   } catch (e) {
-    res.send(e);
+    res.send(e); //FIXME: エラーのときにどうするか考える
     return;
   }
-  res.redirect('/');
+  res.redirect('/loading');
 };
