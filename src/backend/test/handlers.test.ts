@@ -28,15 +28,24 @@ describe('spotifyCallbackHandler', () => {
       send: jest.fn().mockReturnThis(),
     };
 
-    const saveUserAndSpotifyUserSpy = jest
-      .spyOn(firestore, 'saveUserAndSpotifyUser')
-      .mockReturnValueOnce(Promise.all([Promise.resolve()]));
+    const saveUser = jest
+      .spyOn(firestore, 'saveUser')
+      .mockReturnValueOnce(Promise.resolve({ spotifyId: 'TEST_ID' }));
+    const saveSpotyUser = jest.spyOn(firestore, 'saveSpotifyUser').mockReturnValueOnce(
+      Promise.resolve({
+        uid: ['TEST_ID'],
+        spotifyId: 'TEST_SPOTIFY_ID',
+        accessToken: 'ACCESS_TOKEN',
+        refreshToken: 'REFRESH_TOKEN',
+      })
+    );
 
     await spotifyCallbackHandler((req as unknown) as Request, (res as unknown) as Response);
 
     expect(getTokenSpy).toHaveBeenCalled;
     expect(getUserInfomationSpy).toHaveBeenCalled;
-    expect(saveUserAndSpotifyUserSpy).toHaveBeenCalled;
+    expect(saveUser).toHaveBeenCalled;
+    expect(saveSpotyUser).toHaveBeenCalled;
     expect(res.redirect.mock.calls.length).toBe(1);
   });
 
@@ -51,15 +60,24 @@ describe('spotifyCallbackHandler', () => {
       redirect: jest.fn().mockReturnThis(),
       send: jest.fn().mockReturnThis(),
     };
-    const saveUserAndSpotifyUserSpyWithError = jest
-      .spyOn(firestore, 'saveUserAndSpotifyUser')
-      .mockReturnValueOnce(Promise.all([Promise.reject()]));
+    const saveUser = jest
+      .spyOn(firestore, 'saveUser')
+      .mockReturnValueOnce(Promise.resolve({ spotifyId: 'TEST_ID' }));
+    const saveSpotyUser = jest.spyOn(firestore, 'saveSpotifyUser').mockReturnValueOnce(
+      Promise.resolve({
+        uid: ['TEST_ID'],
+        spotifyId: 'TEST_SPOTIFY_ID',
+        accessToken: 'ACCESS_TOKEN',
+        refreshToken: 'REFRESH_TOKEN',
+      })
+    );
 
     await spotifyCallbackHandler((req as unknown) as Request, (res as unknown) as Response);
 
     expect(getTokenSpy).toHaveBeenCalled;
     expect(getUserInfomationSpy).toHaveBeenCalled;
-    expect(saveUserAndSpotifyUserSpyWithError).toHaveBeenCalled;
+    expect(saveUser).toHaveBeenCalled;
+    expect(saveSpotyUser).toHaveBeenCalled;
     expect(res.send.mock.calls.length).toBe(1);
   });
 });
