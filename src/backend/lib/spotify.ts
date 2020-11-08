@@ -3,9 +3,9 @@ import * as functions from 'firebase-functions';
 
 import { spotifyTokenResponse, SpotifyUserResponse } from '../../types';
 
-const CLIENT_ID: string = functions.config().spotify.client_id || 'CLIENT_ID';
-const CLIENT_SECRET: string = functions.config().spotify.client_secret || 'CLIENT_SECRET';
-const REDIRECT_URI: string = functions.config().spotify.redirect_uri || 'REDIRECT_URI';
+const CLIENT_ID: string = functions.config().spotify?.client_id || 'CLIENT_ID';
+const CLIENT_SECRET: string = functions.config().spotify?.client_secret || 'CLIENT_SECRET';
+const REDIRECT_URI: string = functions.config().spotify?.redirect_uri || 'REDIRECT_URI';
 
 export const getToken = async (
   code: string
