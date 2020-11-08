@@ -12,9 +12,7 @@ export type Songs = {
 
 export type User = {
   uid: string;
-  twitterId: string | null;
   playlists?: Playlists;
-  // userToken: string; TODO: なんだっけこれ
   accessToken: string;
   refreshToken: string;
 };

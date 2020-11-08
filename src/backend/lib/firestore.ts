@@ -20,8 +20,6 @@ export const saveUserAndSpotifyUser = async (
   const spotifyUserCollectionRef = fireStore.collection('SpotifyUsers');
   const spotifyUser: User = {
     uid: spotifyUserData.id,
-    twitterId: null,
-    playlists: null,
     accessToken: accessToken,
     refreshToken: refreshToken,
   };
