@@ -1,3 +1,7 @@
+export type SpotifyIdMap = {
+  spotifyId: string;
+};
+
 export type Users = {
   [uid: string]: User;
 };
@@ -11,7 +15,7 @@ export type Songs = {
 };
 
 export type User = {
-  uid: string;
+  uid: string[];
   playlists?: Playlists;
   accessToken: string;
   refreshToken: string;
