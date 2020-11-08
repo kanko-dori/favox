@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { getToken, getUserInfomation } from './lib/spotify';
 import { saveUserAndSpotifyUser } from './lib/firestore';
 
-
 export const spotifyCallbackHandler = async (req: Request, res: Response): Promise<void> => {
   const code = req.query.code as string;
   const uid = req.query.state as string;
