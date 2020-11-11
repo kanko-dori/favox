@@ -2,8 +2,6 @@
   --main-color: #ffbf00;
   --white: #fffff9;
   --black: #202000;
-
-  --breakpoint-sp: 480px;
 }
 
 html {
@@ -11,7 +9,7 @@ html {
 }
 @media screen and (max-width: 480px) {
   html {
-    font-size: 5vw;
+    font-size: 3.25vw;
   }
 }
 body {
