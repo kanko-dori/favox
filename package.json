@@ -14,7 +14,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "test": "jest",
-    "lint": "eslint src/** --fix",
+    "lint": "eslint src/**/{*.js,*.jsx,*.ts,*.tsx} --fix",
     "lint:ci": "eslint src/**"
   },
   "engines": {
