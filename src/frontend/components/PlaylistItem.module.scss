@@ -1,0 +1,15 @@
+.container {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+
+  transition: background-color 0.2s;
+
+  &+& {
+    border-top: 1px #ccc solid;
+  }
+  &:hover {
+    background: rgb(224, 223, 214);
+  }
+}

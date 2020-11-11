@@ -1,0 +1,26 @@
+.info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 3rem;
+  img {
+    height: 10rem;
+  }
+  h3 {
+    font-size: 5rem;
+    margin: 0 3rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .info {
+    flex-direction: column;
+
+    img {
+      height: 8rem;
+    }
+    h3 {
+      font-size: 3rem;
+    }
+  }
+}
