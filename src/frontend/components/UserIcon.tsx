@@ -1,5 +1,3 @@
-import User from "./User";
-
 import classes from './UserIcon.module.scss';
 
 const UserIcon: React.FC = () => {
