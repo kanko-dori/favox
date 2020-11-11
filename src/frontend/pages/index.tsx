@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 const Index: React.FC = () => {
   const router = useRouter();
-  if (auth?.currentUser?.uid) router.push('/my');
+  if (auth?.currentUser?.uid && typeof window !== 'undefined') router.replace('/my');
 
   return (
     <>

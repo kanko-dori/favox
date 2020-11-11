@@ -1,0 +1,33 @@
+.container {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(var(--column-count), minmax(0, 1fr));
+
+  --column-count: 6;
+
+  section {
+    height: calc(95vw / var(--column-count));
+    flex-grow: 1;
+  }
+}
+
+@media screen and (max-width: 75rem) {
+  .container {
+    --column-count: 5;
+  }
+}
+@media screen and (max-width: 50rem) {
+  .container {
+    --column-count: 4;
+  }
+}
+@media screen and (max-width: 40rem) {
+  .container {
+    --column-count: 3;
+  }
+}
+@media screen and (max-width: 30rem) {
+  .container {
+    --column-count: 2;
+  }
+}

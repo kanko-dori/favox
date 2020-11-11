@@ -1,0 +1,39 @@
+.container {
+  user-select: none;
+  position: relative;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+
+  .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--shadow-color);
+
+    transform: scaleX(0);
+    transform-origin: top left;
+
+    &:hover {
+      animation-name: progress;
+      animation-duration: 30s;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+    }
+
+    @keyframes progress {
+      0% { transform: scaleX(0); }
+      100% { transform: scaleX(1); }
+    }
+  }
+
+  .cover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 60%;
+    max-height: 60%;
+    box-shadow: 0.5vw 0.5vw 2vw 0.25vw var(--shadow-color);
+  }
+}
