@@ -1,0 +1,30 @@
+:root {
+  --main-color: #ffbf00;
+  --white: #fffff9;
+  --black: #202000;
+}
+
+html {
+  font-size: 16px;
+}
+@media screen and (max-width: 480px) {
+  html {
+    font-size: 3.25vw;
+  }
+}
+body {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+html, body,
+div, main, article, section, header, footer,
+h1, h2, h3, h4, h5, h6, p, span,
+input, textarea {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, 'Noto Sans JP', Arial, Helvetica, Meiryo, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

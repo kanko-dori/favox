@@ -1,0 +1,41 @@
+.eyecatch {
+  position: fixed;
+  z-index: 0;
+  background-image: url(https://source.unsplash.com/random/1000x1000/?mountain);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  width: 50vw;
+  height: 100vh;
+}
+
+.form {
+  position: fixed;
+  left: 50%;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.75);
+
+  width: 50vw;
+  height: 100vh;
+
+  text-align: center;
+
+  p {
+    margin-top: 35vh;
+  }
+  h3 {
+    font-size: 1.5rem;
+    margin: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .eyecatch {
+    width: 100vw;
+  }
+  .form {
+    width: 100vw;
+    left: 0;
+  }
+}

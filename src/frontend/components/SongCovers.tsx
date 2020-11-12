@@ -1,16 +1,17 @@
 import Cover from '@/components/Cover';
-import { Songs } from '../../types';
+import { Song } from '../../types';
+import classes from './SongCovers.module.scss';
 
 interface Props {
-  songs: Songs;
+  songs: Song[];
 }
 
 const SongCovers: React.FC<Props> = (props: Props) => (
-  <>
-    {Object.entries(props.songs).map(([id, song]) => (
-      <Cover key={id} song={song} />
+  <article className={classes.container}>
+    {props.songs.map((song) => (
+      <Cover key={song.songId} song={song} />
     ))}
-  </>
+  </article>
 );
 
 export default SongCovers;

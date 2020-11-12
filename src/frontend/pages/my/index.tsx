@@ -1,18 +1,17 @@
 import Header from '@/components/Header';
-import Home from '@/components/Home';
+import User from '@/components/User';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/router';
 
-const Index: React.FC = () => {
+const MyPage: React.FC = () => {
   const router = useRouter();
-  if (auth?.currentUser?.uid && typeof window !== 'undefined') router.replace('/my');
-
+  if (!auth?.currentUser?.uid && typeof window !== 'undefined') router.replace('/');
   return (
     <>
       <Header />
-      <Home />
+      <User />
     </>
   );
 };
 
-export default Index;
+export default MyPage;
