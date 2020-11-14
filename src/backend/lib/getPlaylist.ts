@@ -10,7 +10,7 @@ export const getSpotifyPlaylist = async (
 ): Promise<SpotifyApi.SinglePlaylistResponse> => {
   const res = await spotifyApi.getPlaylist(playlistId);
   if (res.statusCode !== 200) {
-    throw new Error('Invalid response');
+    throw new Error('Invalid playlist Id');
   }
   return res.body;
 };

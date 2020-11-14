@@ -18,17 +18,17 @@ describe('getPlaylist', () => {
     expect(getPlaylistSpy).toHaveBeenCalled();
   });
 
-  it('不正なplaylistIdからPlaylistを取得できない', () => {
+  it('不正なplaylistIdからPlaylistを取得できない', async () => {
     const singlePlaylistRes = {
       body: { name: 'Test_playlist' } as SpotifyApi.SinglePlaylistResponse,
       headers: {},
-      statusCode: 200,
+      statusCode: 404,
     };
     const getPlaylistSpy = jest
       .spyOn(SpotifyWebApi.prototype, 'getPlaylist')
-      .mockReturnValueOnce(Promise.reject(singlePlaylistRes));
+      .mockReturnValueOnce(Promise.resolve(singlePlaylistRes));
 
-    expect(getSpotifyPlaylist('INVALID_PLAYLIST_ID')).rejects.toThrow('Invalid playlist Id');
+    await expect(getSpotifyPlaylist('INVALID_PLAYLIST_ID')).rejects.toThrow('Invalid playlist Id');
     expect(getPlaylistSpy).toHaveBeenCalled();
   });
 });
