@@ -3,7 +3,7 @@ import { getSpotifyPlaylist } from '../getPlaylist';
 import SpotifyWebApi from 'spotify-web-api-node';
 // import { SinglePlaylistResponse } from 'spotify-web';
 describe('getPlaylist', () => {
-  it('正しいplaylistIdからPlaylistを取得できる', async () => {
+  it('StatusCode200のときにPlaylistを取得できる', async () => {
     const singlePlaylistRes = {
       body: { name: 'Test_playlist' } as SpotifyApi.SinglePlaylistResponse,
       headers: {},
@@ -18,7 +18,7 @@ describe('getPlaylist', () => {
     expect(getPlaylistSpy).toHaveBeenCalled();
   });
 
-  it('不正なplaylistIdからPlaylistを取得できない', async () => {
+  it('StatusCode200以外のときにエラーが出力される', async () => {
     const singlePlaylistRes = {
       body: { name: 'Test_playlist' } as SpotifyApi.SinglePlaylistResponse,
       headers: {},
