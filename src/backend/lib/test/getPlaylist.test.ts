@@ -28,7 +28,7 @@ describe('getPlaylist', () => {
       .spyOn(SpotifyWebApi.prototype, 'getPlaylist')
       .mockReturnValueOnce(Promise.resolve(singlePlaylistRes));
 
-    await expect(getSpotifyPlaylist('INVALID_PLAYLIST_ID')).rejects.toThrow('Invalid playlist Id');
+    await expect(getSpotifyPlaylist('INVALID_PLAYLIST_ID')).rejects.toThrow();
     expect(getPlaylistSpy).toHaveBeenCalled();
   });
 });
