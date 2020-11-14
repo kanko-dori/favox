@@ -14,8 +14,8 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "test": "jest",
-    "lint": "eslint src/** --fix",
-    "lint:ci": "eslint src/**"
+    "lint": "eslint . --fix",
+    "lint:ci": "eslint ."
   },
   "engines": {
     "node": "10"
@@ -31,7 +31,8 @@
     "node-fetch": "^2.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "spotify-web-api-node": "^5.0.0"
+    "spotify-web-api-node": "^5.0.0",
+    "sass": "^1.29.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.8",

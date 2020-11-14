@@ -31,4 +31,5 @@ module.exports = {
     // Includes .prettierrc.js rules
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
   },
-}
+  ignorePatterns: ['node_modules/**', 'lib/**'],
+};
