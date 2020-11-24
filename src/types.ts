@@ -1,3 +1,5 @@
+import { DocumentReference, DocumentData } from '@google-cloud/firestore';
+
 export type SpotifyIdMap = {
   spotifyId: string;
 };
@@ -10,8 +12,14 @@ export type Playlists = {
   [playlistId: string]: Playlist;
 };
 
+export type Playlist = {
+  id: string;
+  songRef: DocumentReference<DocumentData>[];
+  songs?: (Track | undefined)[];
+};
+
 export type Songs = {
-  [songId: string]: Song;
+  [songId: string]: Track;
 };
 
 export type User = {
@@ -21,17 +29,67 @@ export type User = {
   refreshToken: string;
 };
 
-export type Playlist = {
-  playlistId: string;
-  songs: Songs;
+export type Albums = {
+  [albumId: string]: Album;
 };
 
-export type Song = {
-  songId: string;
-  title: string;
-  artist: string;
-  color: number; // e.g. 0xFF00FF
-  coverUrl: string;
+export type Album = {
+  album_type: string;
+  artists: Artist[];
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  release_date: string;
+  release_date_precision: string;
+  total_tracks: number;
+  type: string;
+  uri: string;
+};
+
+export type SpotifyPlaylist = {
+  collaborative: boolean;
+  description: string;
+  external_urls: ExternalUrls;
+  followers: Followers;
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  owner: Owner;
+  primary_color: null;
+  public: boolean;
+  snapshot_id: string;
+  tracks: PlaylistTracks;
+  type: string;
+  uri: string;
+  songs?: Track[];
+  songRef?: any;
+};
+
+export type PlaylistTracks = {
+  href: string;
+  items: PlaylistItem[];
+  limit: number;
+  next: null;
+  offset: number;
+  previous: null;
+  total: number;
+};
+
+export type PlaylistItem = {
+  added_at: string;
+  added_by: Owner;
+  is_local: boolean;
+  primary_color: null;
+  track: Track;
+  trackRef?: string;
+  video_thumbnail: VideoThumbnail;
+};
+
+type VideoThumbnail = {
+  url?: string;
 };
 
 export type spotifyTokenResponse = {
@@ -62,17 +120,86 @@ type ExplicitContent = {
   filter_locked: boolean;
 };
 
-type ExternalUrls = {
-  spotify: string;
-};
-
 type Followers = {
   href: null;
   total: number;
 };
 
-type Image = {
-  height: null;
+export type Image = {
+  height: number;
   url: string;
-  width: null;
+  width: number;
+  dominantColor: number;
 };
+
+export type Track = {
+  album: SpotifyAlbum;
+  albumRef: DocumentReference<DocumentData>;
+  artists: Owner[];
+  disc_number: number;
+  duration_ms: number;
+  episode: boolean;
+  explicit: boolean;
+  external_ids: ExternalIDS;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  is_local: boolean;
+  is_playable: boolean;
+  name: string;
+  popularity: number;
+  preview_url: string;
+  track: boolean;
+  track_number: number;
+  type: Type;
+  uri: string;
+  linked_from?: Owner;
+};
+
+export type SpotifyAlbum = {
+  album_type: string;
+  artists: Artist[];
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  release_date: string;
+  release_date_precision: string;
+  total_tracks: number;
+  type: string;
+  uri: string;
+};
+
+type Artist = {
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  name: string;
+  type: string;
+  uri: string;
+};
+
+type ExternalUrls = {
+  spotify: string;
+};
+
+type ExternalIDS = {
+  isrc: string;
+};
+
+type Owner = {
+  display_name?: string;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  type: Type;
+  uri: string;
+  name?: string;
+};
+
+enum Type {
+  Artist = 'artist',
+  Track = 'track',
+  User = 'user',
+}
