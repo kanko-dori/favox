@@ -11,7 +11,7 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState(typeof window !== 'undefined' ? auth.currentUser : null);
+  const [user, setUser] = useState(typeof window !== 'undefined' ? auth?.currentUser : null);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
