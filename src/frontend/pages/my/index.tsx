@@ -1,11 +1,12 @@
 import Header from '@/components/Header';
 import User from '@/components/User';
-import { auth } from '@/lib/firebase';
+import { useUser } from '@/lib/UserProvider';
 import { useRouter } from 'next/router';
 
 const MyPage: React.FC = () => {
   const router = useRouter();
-  if (!auth?.currentUser?.uid && typeof window !== 'undefined') router.replace('/');
+  const user = useUser();
+  if (!user?.uid && typeof window !== 'undefined') router.replace('/');
   return (
     <>
       <Header />
