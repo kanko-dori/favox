@@ -151,7 +151,7 @@ export type Track = {
   preview_url: string;
   track: boolean;
   track_number: number;
-  type: Type;
+  type: ownerType;
   uri: string;
   linked_from?: Owner;
 };
@@ -193,13 +193,9 @@ type Owner = {
   external_urls: ExternalUrls;
   href: string;
   id: string;
-  type: Type;
+  type: ownerType;
   uri: string;
   name?: string;
 };
 
-enum Type {
-  Artist = 'artist',
-  Track = 'track',
-  User = 'user',
-}
+type ownerType = 'artist' | 'track' | 'user';
