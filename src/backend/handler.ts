@@ -3,7 +3,7 @@ import { getToken, getUserInfomation } from './lib/spotify';
 import { saveUser, saveSpotifyUser, saveAlbum, savePlaylist, saveTrack } from './lib/firestore';
 
 import { fireStore } from './lib/firebase';
-import { Playlist, SpotifyIdMap, Track, User } from '../types';
+import { Playlist, SpotifyIdMap, User } from '../types';
 import { getPlaylist } from './lib/spotify';
 import * as functions from 'firebase-functions';
 
