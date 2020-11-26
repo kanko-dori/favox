@@ -13,7 +13,7 @@ const nextjsServer = next({
 });
 const nextjsHandle = nextjsServer.getRequestHandler();
 
-server.get('/save', async (req, res, next) => {
+server.get('/save', async (req, res) => {
   const data = {
     collaborative: false,
     description: '',
@@ -607,7 +607,7 @@ server.get('/save', async (req, res, next) => {
   res.send('done');
 });
 
-server.get('/getData', async (req, res, next) => {
+server.get('/getData', async (req, res) => {
   const playlistRef = fireStore.doc('Playlists/5lclPHYBPxhQnoPUkMjLKZ');
   const playlistDoc = await playlistRef.get();
   const playlist = playlistDoc.data() as Playlist;
@@ -642,7 +642,7 @@ export const saveSpotifyPlaylist = functions.https.onCall(addSpotifyPlaylistHand
 
 export const generateDomonantColor = functions.firestore
   .document('albums/{songId}')
-  .onCreate((change, context) => {
+  .onCreate((change) => {
     const album = change.data() as Album;
     console.log(album.images);
     return album.images[0];
