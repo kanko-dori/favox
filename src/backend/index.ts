@@ -586,17 +586,18 @@ server.get('/save', async (req, res) => {
 
   const saveAlbumPromises = albums.map(saveAlbum);
   await Promise.all(saveAlbumPromises);
-  tracks.forEach((track) => {
+  const trackWithAlbum = tracks.map((track) => {
     track.albumRef = fireStore.doc(`Albums/${track.album.id}`);
+    return track;
   });
 
-  const saveTrackPromises = tracks.map(saveTrack);
+  const saveTrackPromises = trackWithAlbum.map(saveTrack);
   await Promise.all(saveTrackPromises);
 
-  data.songRef = (data.tracks.items.map((item) => {
+  data.songRef = data.tracks.items.map((item) => {
     console.log(`ref: Tracks/${item.track.id}`);
     return fireStore.doc(`Tracks/${item.track.id}`);
-  }) as unknown) as Track[];
+  });
 
   const playlist: Playlist = {
     id: data.id,
