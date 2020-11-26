@@ -76,8 +76,8 @@ export const saveAlbum = async (album: Album): Promise<Album> => {
   });
 };
 
-export const saveTrack = async (track: Track): Promise<Track> =>
-  new Promise((resolve, reject) => {
+export const saveTrack = async (track: Track): Promise<Track> => {
+  return new Promise((resolve, reject) => {
     const albumRef = fireStore.collection('Tracks').doc(track.id);
     albumRef
       .get()
@@ -86,13 +86,13 @@ export const saveTrack = async (track: Track): Promise<Track> =>
           console.log(`Track ${track.id} is already exists`);
           resolve(doc.data() as Track);
         }
-        return albumRef.set(track);
+        albumRef.set(track).then(() => {
+          resolve(track);
+        });
       })
-      .then(() => {
-        resolve(track);
-      });
       .catch((e) => reject(e));
   });
+};
 
 export const savePlaylist = async (playlist: Playlist): Promise<Playlist> => {
   return new Promise((resolve, reject) => {
