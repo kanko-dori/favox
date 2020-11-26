@@ -65,7 +65,7 @@ export type SpotifyPlaylist = {
   type: string;
   uri: string;
   songs?: Track[];
-  songRef?: any;
+  songRef?: DocumentReference<DocumentData>[];
 };
 
 export type PlaylistTracks = {
