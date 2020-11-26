@@ -13,7 +13,7 @@ const nextjsServer = next({
 });
 const nextjsHandle = nextjsServer.getRequestHandler();
 
-server.get('/save', async (req, res, next) => {
+server.get('/save', async (req, res) => {
   const data = {
     collaborative: false,
     description: '',
