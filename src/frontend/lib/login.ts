@@ -1,8 +1,8 @@
 import firebase from 'firebase/app';
 import { isDev } from './utils';
 
-export const login = (auth: firebase.auth.Auth): void => {
-  if (!auth) return;
+export const login = (auth: firebase.auth.Auth | null): void => {
+  if (!auth) throw new Error('Firebase is not initialized');
   auth.signInAnonymously().then(() => {
     openSpotifyLoginPage(auth.currentUser.uid);
   });
