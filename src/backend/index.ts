@@ -586,12 +586,14 @@ server.get('/save', async (req, res) => {
 
   const saveAlbumPromises = albums.map(saveAlbum);
   await Promise.all(saveAlbumPromises);
-  const trackWithAlbum = tracks.map((track) => {
-    track.albumRef = fireStore.doc(`Albums/${track.album.id}`);
-    return track;
+  const trackCollections = tracks.map((track) => {
+    return {
+      ...track,
+      albumRef: fireStore.doc(`Albums/${track.album.id}`),
+    };
   });
 
-  const saveTrackPromises = trackWithAlbum.map(saveTrack);
+  const saveTrackPromises = trackCollections.map(saveTrack);
   await Promise.all(saveTrackPromises);
 
   data.songRef = data.tracks.items.map((item) => {

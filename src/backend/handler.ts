@@ -55,11 +55,15 @@ export const addSpotifyPlaylistHandler = async (
 
   const saveAlbumPromises = albums.map(saveAlbum);
   await Promise.all(saveAlbumPromises);
-  tracks.forEach((track) => {
-    track.albumRef = fireStore.doc(`Albums/${track.album.id}`);
+
+  const trackCollections = tracks.map((track) => {
+    return {
+      ...track,
+      albumRef: fireStore.doc(`Albums/${track.album.id}`),
+    };
   });
 
-  const saveTrackPromises = tracks.map(saveTrack);
+  const saveTrackPromises = trackCollections.map(saveTrack);
   await Promise.all(saveTrackPromises);
 
   playlistData.songRef = playlistData.tracks.items.map((item) => {
