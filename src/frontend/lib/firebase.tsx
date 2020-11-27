@@ -3,7 +3,7 @@ import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/functions';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCzc664p6hxw01eU2pIzi6DPM3qmtfW4gY',
@@ -53,3 +53,5 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({ children }) 
 
   return <FirebaseContext.Provider value={contextValue}>{children}</FirebaseContext.Provider>;
 };
+
+export const useFirebase = (): FirebaseContextValue => useContext(FirebaseContext);
