@@ -1,7 +1,7 @@
-import { auth } from './firebase';
+import firebase from 'firebase/app';
 import { isDev } from './utils';
 
-export const login = (): void => {
+export const login = (auth: firebase.auth.Auth): void => {
   if (!auth) return;
   auth.signInAnonymously().then(() => {
     openSpotifyLoginPage(auth.currentUser.uid);
