@@ -10,8 +10,8 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-export const UserProvider: React.FC = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState(typeof window !== 'undefined' ? auth?.currentUser : null);
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User>(typeof window !== 'undefined' ? auth?.currentUser : null);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
