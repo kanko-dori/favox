@@ -1,4 +1,4 @@
-import { auth } from '@/lib/firebase';
+import { useUser } from '@/lib/UserProvider';
 import Link from 'next/link';
 import classes from './Header.module.scss';
 
@@ -7,9 +7,10 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ title }) => {
+  const user = useUser();
   return (
     <header className={classes.header}>
-      <Link href={auth?.currentUser?.uid ? '/my' : '/'}>
+      <Link href={user?.uid ? '/my' : '/'}>
         <a className={classes.favox}>
           <h1>Favox</h1>
         </a>
