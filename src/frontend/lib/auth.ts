@@ -7,6 +7,8 @@ export const login = (auth: firebase.auth.Auth | null): void => {
   });
 };
 
+export const logout = (auth: firebase.auth.Auth | null): Promise<void> => auth?.signOut();
+
 export const openSpotifyLoginPage = (uid: string): void => {
   const url = new URL('https://accounts.spotify.com/authorize');
   url.searchParams.set('client_id', '8c086f866655424db67aa2817d5ae0e9');
