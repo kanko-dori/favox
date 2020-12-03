@@ -1,6 +1,7 @@
 import { useUser } from '@/lib/UserProvider';
 import Link from 'next/link';
 import classes from './Header.module.scss';
+import LogoutButton from './LogoutButton';
 
 interface Props {
   title?: string;
@@ -17,10 +18,12 @@ const Header: React.FC<Props> = ({ title }) => {
       </Link>
       {title && (
         <>
-          <div className={classes.divider}></div>
+          <div className={classes.divider} />
           <h3 className={classes.title}>{title}</h3>
         </>
       )}
+      <div className={classes.spacer} />
+      {user?.uid && <LogoutButton />}
     </header>
   );
 };
