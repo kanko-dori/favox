@@ -66,14 +66,14 @@ export const addSpotifyPlaylistHandler = async (
   const saveTrackPromises = trackCollections.map(saveTrack);
   await Promise.all(saveTrackPromises);
 
-  playlistData.songRef = playlistData.tracks.items.map((item) => {
+  const songRefs = playlistData.tracks.items.map((item) => {
     console.log(`ref: Tracks/${item.track.id}`);
     return fireStore.doc(`Tracks/${item.track.id}`);
   });
 
   const playlist: Playlist = {
     id: playlistData.id,
-    songRef: playlistData.songRef,
+    songRefs: songRefs,
   };
 
   await savePlaylist(playlist);

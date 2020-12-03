@@ -14,7 +14,7 @@ export type Playlists = {
 
 export type Playlist = {
   id: string;
-  songRef: DocumentReference<DocumentData>[];
+  songRefs: DocumentReference<DocumentData>[];
   songs?: (Track | undefined)[];
 };
 
