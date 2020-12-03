@@ -47,7 +47,6 @@ export const addSpotifyPlaylistHandler = async (
   if (!spotifyUserDoc) {
     return;
   }
-
   const spotifyUser = spotifyUserDoc.data() as User;
 
   const playlistData = await getPlaylist(data.playlistId, spotifyUser.accessToken);
