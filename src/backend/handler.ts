@@ -34,7 +34,7 @@ export const addSpotifyPlaylistHandler = async (
     console.log('context.auth is null', auth);
     return;
   }
-  const uid = auth.uid;
+  const { uid } = auth;
   const spotifyIdMapRef = fireStore.collection('SpotifyIdMap').doc(uid);
   const spotifyIdMapDoc = await spotifyIdMapRef.get();
   if (!spotifyIdMapDoc.exists) {
