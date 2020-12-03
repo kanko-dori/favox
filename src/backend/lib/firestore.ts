@@ -72,7 +72,7 @@ export const saveAlbum = async (album: Album): Promise<Album> => {
           resolve(album);
         });
       })
-      .catch((e) => reject(e));
+      .catch(reject);
   });
 };
 
