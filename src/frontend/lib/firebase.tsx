@@ -4,6 +4,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/functions';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { isDev } from './utils';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCzc664p6hxw01eU2pIzi6DPM3qmtfW4gY',
@@ -18,16 +19,22 @@ const firebaseConfig = {
 
 export default firebase;
 
+type FirebaseCallableFunctions = {
+  saveSpotifyPlaylist: firebase.functions.HttpsCallable;
+};
+
 interface FirebaseContextValue {
   auth: firebase.auth.Auth | null;
   firestore: firebase.firestore.Firestore | null;
   functions: firebase.functions.Functions | null;
+  callableFunctions: FirebaseCallableFunctions | null;
 }
 
 const FirebaseContext = createContext<FirebaseContextValue>({
   auth: null,
   firestore: null,
   functions: null,
+  callableFunctions: null,
 });
 
 interface FirebaseProviderProps {
@@ -39,6 +46,7 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({ children }) 
     auth: null,
     firestore: null,
     functions: null,
+    callableFunctions: null,
   });
 
   useEffect(() => {
@@ -48,7 +56,13 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({ children }) 
       auth: firebase.auth(),
       firestore: firebase.firestore(),
       functions: firebase.functions(),
+      callableFunctions: {
+        saveSpotifyPlaylist: firebase.functions().httpsCallable('saveSpotifyPlaylist'),
+      },
     });
+    if (isDev) {
+      firebase.functions().useEmulator('localhost', 5001);
+    }
   }, []);
 
   return <FirebaseContext.Provider value={contextValue}>{children}</FirebaseContext.Provider>;
