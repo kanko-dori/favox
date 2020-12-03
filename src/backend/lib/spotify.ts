@@ -49,7 +49,7 @@ export const getPlaylist = async (
   playlistId: string,
   accessToken: string
 ): Promise<SpotifyPlaylist> => {
-  const playlistResponse = await fetch(`https://api.spotify.com/v1/playlist/${playlistId}`, {
+  const playlistResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
