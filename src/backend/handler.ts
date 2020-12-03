@@ -71,7 +71,7 @@ export const addSpotifyPlaylistHandler = async (
     return fireStore.doc(`Tracks/${item.track.id}`);
   });
 
-  const playlist: Playlist = { id: playlistData.id,  songRefs };
+  const playlist: Playlist = { id: playlistData.id, songRefs };
 
   await savePlaylist(playlist);
 };
