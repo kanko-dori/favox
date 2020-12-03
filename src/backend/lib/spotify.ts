@@ -1,7 +1,7 @@
 import 'node-fetch';
 import * as functions from 'firebase-functions';
 
-import { spotifyTokenResponse, SpotifyUserResponse } from '../../types';
+import { SpotifyPlaylist, spotifyTokenResponse, SpotifyUserResponse } from '../../types';
 
 const CLIENT_ID: string = functions.config().spotify?.client_id || 'CLIENT_ID';
 const CLIENT_SECRET: string = functions.config().spotify?.client_secret || 'CLIENT_SECRET';
@@ -43,4 +43,17 @@ export const getUserInfomation = async (accessToken: string): Promise<SpotifyUse
   });
 
   return (await userDataResponse.json()) as SpotifyUserResponse;
+};
+
+export const getPlaylist = async (
+  playlistId: string,
+  accessToken: string
+): Promise<SpotifyPlaylist> => {
+  const playlistResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return (await playlistResponse.json()) as SpotifyPlaylist;
 };

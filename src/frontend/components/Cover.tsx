@@ -1,22 +1,22 @@
-import { Song } from '../../types';
+import { Track } from '../../types';
 import classes from './Cover.module.scss';
 import SongController from './SongController';
 
 interface Props {
-  song: Song;
+  track: Track;
 }
 
-const Cover: React.FC<Props> = ({ song }) => {
+const Cover: React.FC<Props> = ({ track }) => {
   return (
     <section
-      title={song.title}
+      title={track.name}
       className={classes.container}
       style={{
-        backgroundColor: `#${song.color.toString(16)}`,
+        backgroundColor: `#${track.album.images[0].dominantColor.toString(16)}`,
       }}
     >
       <div className={`playing ${classes.progress}`} />
-      <img className={classes.cover} src={song.coverUrl} alt="cover" />
+      <img className={classes.cover} src={track.album.images[0].url} alt="cover" />
       <SongController />
     </section>
   );

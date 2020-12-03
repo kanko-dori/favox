@@ -1,15 +1,15 @@
 import Cover from '@/components/Cover';
-import { Song } from '../../types';
+import { Track } from '../../types';
 import classes from './SongCovers.module.scss';
 
 interface Props {
-  songs: Song[];
+  songs: Track[];
 }
 
 const SongCovers: React.FC<Props> = (props: Props) => (
   <article className={classes.container}>
     {props.songs.map((song) => (
-      <Cover key={song.songId} song={song} />
+      <Cover key={song.id} track={song} />
     ))}
   </article>
 );
