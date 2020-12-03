@@ -22,7 +22,7 @@ export const spotifyCallbackHandler = async (req: Request, res: Response): Promi
     res.send(e); //FIXME: エラーのときにどうするか考える
     return;
   }
-  res.redirect('/loading');
+  res.redirect('/my');
 };
 
 export const addSpotifyPlaylistHandler = async (
@@ -31,6 +31,7 @@ export const addSpotifyPlaylistHandler = async (
 ): Promise<void> => {
   const auth = context.auth;
   if (auth == null) {
+    console.log('context.auth is null', auth);
     return;
   }
   const uid = auth.uid;
