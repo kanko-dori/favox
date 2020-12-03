@@ -40,8 +40,8 @@ export const addSpotifyPlaylistHandler = async (
   if (!spotifyIdMapDoc.exists) {
     return;
   }
-
   const spotifyIdMap = spotifyIdMapDoc.data() as SpotifyIdMap;
+
   const spotifyUserRef = fireStore.collection('Users').doc(spotifyIdMap.spotifyId);
   const spotifyUserDoc = await spotifyUserRef.get();
   if (!spotifyUserDoc) {
