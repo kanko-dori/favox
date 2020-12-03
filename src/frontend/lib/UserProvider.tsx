@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { auth } from './firebase';
+import { useFirebase } from './firebase';
 
 type User = firebase.User | null;
 
@@ -10,14 +10,15 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-export const UserProvider: React.FC = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState(typeof window !== 'undefined' ? auth?.currentUser : null);
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const { auth } = useFirebase();
+  const [user, setUser] = useState<User>(typeof window !== 'undefined' ? auth?.currentUser : null);
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth?.onAuthStateChanged((user) => {
       setUser(user);
     });
     return unsubscribe;
-  }, []);
+  }, [auth]);
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
 

@@ -1,7 +1,7 @@
 import Helmet from '@/components/Helmet';
+import { FirebaseProvider } from '@/lib/firebase';
 import { UserProvider } from '@/lib/UserProvider';
 import type { AppProps } from 'next/app';
-
 import './_app.scss';
 
 const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
@@ -16,9 +16,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
           rel="stylesheet"
         />
       </Helmet>
-      <UserProvider>
-        <Component {...pageProps} />
-      </UserProvider>
+      <FirebaseProvider>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </FirebaseProvider>
     </>
   );
 };
