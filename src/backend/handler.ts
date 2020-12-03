@@ -29,7 +29,7 @@ export const addSpotifyPlaylistHandler = async (
   data: { playlistId: string },
   context: functions.https.CallableContext
 ): Promise<void> => {
-  const auth = context.auth;
+  const { auth } = context;
   if (auth == null) {
     console.log('context.auth is null', auth);
     return;
