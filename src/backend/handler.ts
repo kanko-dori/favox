@@ -50,7 +50,7 @@ export const addSpotifyPlaylistHandler = async (
   const spotifyUser = spotifyUserDoc.data() as User;
 
   const playlistData = await getPlaylist(data.playlistId, spotifyUser.accessToken);
-  const tracks = playlistData.tracks.items.map((item) => item.track);
+  const tracks = playlistData.playlistTracks.items.map((item) => item.track);
   const albums = tracks.map((track) => track.album);
 
   const saveAlbumPromises = albums.map(saveAlbum);
@@ -66,12 +66,12 @@ export const addSpotifyPlaylistHandler = async (
   const saveTrackPromises = trackCollections.map(saveTrack);
   await Promise.all(saveTrackPromises);
 
-  const songRefs = playlistData.tracks.items.map((item) => {
+  const trackRefs = playlistData.playlistTracks.items.map((item) => {
     console.log(`ref: Tracks/${item.track.id}`);
     return fireStore.doc(`Tracks/${item.track.id}`);
   });
 
-  const playlist: Playlist = { id: playlistData.id, songRefs };
+  const playlist: Playlist = { id: playlistData.id, trackRefs };
 
   await savePlaylist(playlist);
 };

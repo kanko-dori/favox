@@ -1,6 +1,6 @@
 import { Track } from '../../types';
 import classes from './Cover.module.scss';
-import SongController from './SongController';
+import TrackController from './TrackController';
 
 interface Props {
   track: Track;
@@ -17,7 +17,7 @@ const Cover: React.FC<Props> = ({ track }) => {
     >
       <div className={`playing ${classes.progress}`} />
       <img className={classes.cover} src={track.album.images[0].url} alt="cover" />
-      <SongController />
+      <TrackController />
     </section>
   );
 };

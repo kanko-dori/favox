@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import SongCovers from '@/components/SongCovers';
+import TrackCovers from '@/components/TrackCovers';
 import { useRouter } from 'next/router';
 
 const Playlist: React.FC = () => {
@@ -10,7 +10,7 @@ const Playlist: React.FC = () => {
   return (
     <>
       <Header />
-      <SongCovers songs={tracks} />
+      <TrackCovers tracks={tracks} />
     </>
   );
 };

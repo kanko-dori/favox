@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import classes from './SongController.module.scss';
+import classes from './TrackController.module.scss';
 
-const SongController: React.FC = () => {
+const TrackController: React.FC = () => {
   const [playing, setPlaying] = useState(false);
   return (
     <div className={classes.container}>
@@ -25,4 +25,4 @@ const SongController: React.FC = () => {
   );
 };
 
-export default SongController;
+export default TrackController;
