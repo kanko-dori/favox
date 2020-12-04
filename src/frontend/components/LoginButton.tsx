@@ -1,5 +1,5 @@
 import { useFirebase } from '@/lib/firebase';
-import { login } from '@/lib/login';
+import { login } from '@/lib/auth';
 import classes from './LoginButton.module.scss';
 
 const LoginButton: React.FC = () => {
