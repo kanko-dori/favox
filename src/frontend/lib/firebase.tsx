@@ -44,11 +44,16 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({ children }) 
   useEffect(() => {
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-    setContextValue({
-      auth: firebase.auth(),
-      firestore: firebase.firestore(),
-      functions: firebase.functions(),
-    });
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+    const functions = firebase.functions();
+    setContextValue({ auth, firestore, functions });
+
+    const { hostname } = location;
+    if (hostname === 'localhost') {
+      functions.useEmulator(hostname, 5001);
+      firestore.useEmulator(hostname, 5002);
+    }
   }, []);
 
   return <FirebaseContext.Provider value={contextValue}>{children}</FirebaseContext.Provider>;
