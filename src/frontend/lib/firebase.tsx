@@ -4,6 +4,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/functions';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { isDev } from './utils';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCzc664p6hxw01eU2pIzi6DPM3qmtfW4gY',
@@ -49,10 +50,9 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({ children }) 
     const functions = firebase.functions();
     setContextValue({ auth, firestore, functions });
 
-    const { hostname } = location;
-    if (hostname === 'localhost') {
-      functions.useEmulator(hostname, 5001);
-      firestore.useEmulator(hostname, 5002);
+    if (isDev) {
+      functions.useEmulator(location.hostname, 5001);
+      firestore.useEmulator(location.hostname, 5002);
     }
   }, []);
 
