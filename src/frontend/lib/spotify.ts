@@ -1,6 +1,8 @@
 import firebase from 'firebase/app';
 import { useEffect, useState } from 'react';
-import { SpotifyIdMap, User } from '../../types';
+import { SpotifyIdMap, SpotifyUserResponse, User } from '../../types';
+
+const spotifyApiEndpoint = 'https://api.spotify.com';
 
 export const useSpotifyToken = (
   firestore: firebase.firestore.Firestore | null,
@@ -22,4 +24,30 @@ export const useSpotifyToken = (
   }, [firestore, uid]);
 
   return token;
+};
+
+type SpotifyUser = {
+  name: string;
+  image: string;
+};
+
+export const useSpotifyUser = (token: string): SpotifyUser | undefined => {
+  const [user, setUser] = useState<SpotifyUser | undefined>();
+
+  useEffect(() => {
+    if (token === '') return;
+    fetch(`${spotifyApiEndpoint}/v1/me`, {
+      headers: { Authorization: token },
+    })
+      .then((res) => res.json() as Promise<SpotifyUserResponse>)
+      .then((user) =>
+        setUser({
+          name: user.display_name,
+          image: user.images[0].url,
+        })
+      )
+      .catch(console.error);
+  }, [token]);
+
+  return user;
 };
