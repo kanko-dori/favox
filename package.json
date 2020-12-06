@@ -1,7 +1,7 @@
 {
   "name": "functions",
   "scripts": {
-    "build": "npm run build:back && npm run build:front",
+    "build": "run-p build:*",
     "build:back": "tsc",
     "build:front": "next build src/frontend",
     "watch:back": "tsc --watch",

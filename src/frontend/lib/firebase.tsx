@@ -4,6 +4,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/functions';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { isDev } from './utils';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCzc664p6hxw01eU2pIzi6DPM3qmtfW4gY',
@@ -44,11 +45,15 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({ children }) 
   useEffect(() => {
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-    setContextValue({
-      auth: firebase.auth(),
-      firestore: firebase.firestore(),
-      functions: firebase.functions(),
-    });
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+    const functions = firebase.functions();
+    setContextValue({ auth, firestore, functions });
+
+    if (isDev) {
+      functions.useEmulator(location.hostname, 5001);
+      firestore.useEmulator(location.hostname, 5002);
+    }
   }, []);
 
   return <FirebaseContext.Provider value={contextValue}>{children}</FirebaseContext.Provider>;
