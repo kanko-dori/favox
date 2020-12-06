@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import { useEffect, useState } from 'react';
-import { SpotifyIdMap, SpotifyUserResponse, User } from '../../types';
+import { SpotifyIdMap, SpotifyPlaylistsResponse, SpotifyUserResponse, User } from '../../types';
 
 const spotifyApiEndpoint = 'https://api.spotify.com';
 
@@ -50,4 +50,40 @@ export const useSpotifyUser = (token: string): SpotifyUser | undefined => {
   }, [token]);
 
   return user;
+};
+
+type Playlist = {
+  id: string;
+  name: string;
+};
+
+export const usePlaylists = (token: string): Playlist[] => {
+  const [playlists, setPlaylists] = useState([]);
+
+  useEffect(() => {
+    if (token === '') return;
+
+    function getPlaylists(url: string): Promise<void> {
+      return fetch(url, {
+        headers: { Authorization: token },
+      })
+        .then((res) => res.json() as Promise<SpotifyPlaylistsResponse>)
+        .then((page) => {
+          setPlaylists([
+            ...playlists,
+            ...page.items.map((playlist) => ({
+              id: playlist.id,
+              name: playlist.name,
+            })),
+          ]);
+          return page.next ? getPlaylists(page.next) : Promise.resolve();
+        })
+        .catch(console.error);
+    }
+
+    getPlaylists(`${spotifyApiEndpoint}/v1/me/playlists`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  return playlists;
 };
