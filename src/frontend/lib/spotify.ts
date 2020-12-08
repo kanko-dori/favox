@@ -58,32 +58,28 @@ type Playlist = {
 };
 
 export const usePlaylists = (token: string): Playlist[] => {
+  const [next, setNext] = useState(`${spotifyApiEndpoint}/v1/me/playlists`);
   const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
     if (token === '') return;
 
-    function getPlaylists(url: string): Promise<void> {
-      return fetch(url, {
-        headers: { Authorization: token },
-      })
-        .then((res) => res.json() as Promise<SpotifyPlaylistsResponse>)
-        .then((page) => {
-          setPlaylists([
-            ...playlists,
-            ...page.items.map((playlist) => ({
-              id: playlist.id,
-              name: playlist.name,
-            })),
-          ]);
-          return page.next ? getPlaylists(page.next) : Promise.resolve();
-        })
-        .catch(console.error);
-    }
-
-    getPlaylists(`${spotifyApiEndpoint}/v1/me/playlists`);
+    fetch(next, {
+      headers: { Authorization: token },
+    })
+      .then((res) => res.json() as Promise<SpotifyPlaylistsResponse>)
+      .then((page) => {
+        setNext(page.next);
+        setPlaylists([
+          ...playlists,
+          ...page.items.map((playlist) => ({
+            id: playlist.id,
+            name: playlist.name,
+          })),
+        ]);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, [token, next]);
 
   return playlists;
 };
