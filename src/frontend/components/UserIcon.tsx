@@ -1,9 +1,10 @@
 import classes from './UserIcon.module.scss';
 
-const UserIcon: React.FC = () => {
-  const imageUrl = 'https://pbs.twimg.com/profile_images/1317017420192653314/0jh1tG2D_400x400.jpg';
+interface Props {
+  url: string;
+}
 
-  return <img className={classes.icon} src={imageUrl} alt="user icon" />;
-};
-
+const UserIcon: React.FC<Props> = ({ url }) => (
+  <img className={classes.icon} src={url ?? '/images/dummyicon.svg'} alt="user icon" />
+);
 export default UserIcon;

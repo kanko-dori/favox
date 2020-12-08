@@ -1,21 +1,20 @@
 import PlaylistItem from '@/components/PlaylistItem';
 import UserInfo from '@/components/UserInfo';
 import { useFirebase } from '@/lib/firebase';
-import { useSpotifyToken } from '@/lib/spotify';
-import { useEffect } from 'react';
+import { usePlaylists, useSpotifyToken, useSpotifyUser } from '@/lib/spotify';
 import classes from './User.module.scss';
 
 const User: React.FC = () => {
   const { auth, firestore } = useFirebase();
   const token = useSpotifyToken(firestore, auth?.currentUser?.uid);
-  const playlists = ['My Playlist1', 'My Playlist2', '神曲'];
+  const user = useSpotifyUser(token);
+  const playlists = usePlaylists(token);
 
-  useEffect(() => console.log({ token }), [token]);
   return (
     <article className={classes.container}>
-      <UserInfo />
+      <UserInfo user={user} />
       {playlists.map((playlist) => (
-        <PlaylistItem key={playlist} name={playlist} />
+        <PlaylistItem key={playlist.id} name={playlist.name} />
       ))}
     </article>
   );
