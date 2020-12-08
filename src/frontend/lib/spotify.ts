@@ -27,9 +27,9 @@ export const useSpotifyToken = (
   return token;
 };
 
-type SpotifyUser = {
+export type SpotifyUser = {
   name: string;
-  image: string;
+  image?: string;
 };
 
 export const useSpotifyUser = (token: string): SpotifyUser | undefined => {
@@ -44,7 +44,7 @@ export const useSpotifyUser = (token: string): SpotifyUser | undefined => {
       .then((user) =>
         setUser({
           name: user.display_name,
-          image: user.images[0].url,
+          image: user.images[0]?.url,
         })
       )
       .catch(console.error);
