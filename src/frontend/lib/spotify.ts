@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { SpotifyIdMap, SpotifyPlaylistsResponse, SpotifyUserResponse, User } from '../../types';
 
 const spotifyApiEndpoint = 'https://api.spotify.com';
+const bearer = (token: string): string => `Bearer ${token}`;
 
 export const useSpotifyToken = (
   firestore: firebase.firestore.Firestore | null,
@@ -37,7 +38,7 @@ export const useSpotifyUser = (token: string): SpotifyUser | undefined => {
   useEffect(() => {
     if (token === '') return;
     fetch(`${spotifyApiEndpoint}/v1/me`, {
-      headers: { Authorization: token },
+      headers: { Authorization: bearer(token) },
     })
       .then((res) => res.json() as Promise<SpotifyUserResponse>)
       .then((user) =>
@@ -65,7 +66,7 @@ export const usePlaylists = (token: string): Playlist[] => {
     if (token === '') return;
 
     fetch(next, {
-      headers: { Authorization: token },
+      headers: { Authorization: bearer(token) },
     })
       .then((res) => res.json() as Promise<SpotifyPlaylistsResponse>)
       .then((page) => {
