@@ -53,17 +53,18 @@ export const useSpotifyUser = (token: string): SpotifyUser | undefined => {
   return user;
 };
 
-type Playlist = {
+export type Playlist = {
   id: string;
   name: string;
 };
 
 export const usePlaylists = (token: string): Playlist[] => {
-  const [next, setNext] = useState(`${spotifyApiEndpoint}/v1/me/playlists`);
+  const [next, setNext] = useState<null | string>(`${spotifyApiEndpoint}/v1/me/playlists`);
   const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
     if (token === '') return;
+    if (next == null) return;
 
     fetch(next, {
       headers: { Authorization: bearer(token) },
