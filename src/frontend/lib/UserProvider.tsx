@@ -12,7 +12,9 @@ interface UserProviderProps {
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { auth } = useFirebase();
-  const [user, setUser] = useState<User>(typeof window !== 'undefined' ? auth?.currentUser : null);
+  const [user, setUser] = useState<User>(
+    typeof window !== 'undefined' ? auth?.currentUser ?? null : null
+  );
   useEffect(() => {
     const unsubscribe = auth?.onAuthStateChanged((user) => {
       setUser(user);
