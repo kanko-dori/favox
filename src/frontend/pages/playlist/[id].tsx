@@ -1,11 +1,9 @@
 import Header from '@/components/Header';
 import TrackCovers from '@/components/TrackCovers';
-import { useRouter } from 'next/router';
+import { Track } from '../../../types';
 
 const Playlist: React.FC = () => {
-  const router = useRouter();
-  const { playlistId } = router.query;
-  const tracks = [];
+  const tracks: Track[] = [];
 
   return (
     <>

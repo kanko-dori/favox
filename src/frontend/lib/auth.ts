@@ -2,12 +2,17 @@ import firebase from 'firebase/app';
 
 export const login = (auth: firebase.auth.Auth | null): void => {
   if (!auth) throw new Error('Firebase is not initialized');
-  auth.signInAnonymously().then(() => {
-    openSpotifyLoginPage(auth.currentUser.uid);
-  });
+  auth
+    .signInAnonymously()
+    .then(() => {
+      if (auth?.currentUser?.uid == null) throw new Error('Login failed');
+      openSpotifyLoginPage(auth.currentUser.uid);
+    })
+    .catch(console.error);
 };
 
-export const logout = (auth: firebase.auth.Auth | null): Promise<void> => auth?.signOut();
+export const logout = (auth: firebase.auth.Auth | null): Promise<void> =>
+  auth?.signOut() ?? Promise.resolve();
 
 export const openSpotifyLoginPage = (uid: string): void => {
   const url = new URL('https://accounts.spotify.com/authorize');
