@@ -1,12 +1,16 @@
 import UserIcon from '@/components/UserIcon';
 import classes from './UserInfo.module.scss';
+import { SpotifyUser } from '@/lib/spotify';
 
-const UserInfo: React.FC = () => {
-  const username = 'ssssota';
+interface Props {
+  user?: SpotifyUser;
+}
+
+const UserInfo: React.FC<Props> = ({ user }) => {
   return (
     <section className={classes.info}>
-      <UserIcon />
-      <h3>{username}</h3>
+      <UserIcon url={user?.image} />
+      <h3>{user?.name}</h3>
     </section>
   );
 };

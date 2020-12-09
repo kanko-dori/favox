@@ -11,7 +11,7 @@
     "source": "."
   },
   "hosting": {
-    "public": "lib/next/server/pages",
+    "public": "src/frontend/public",
     "rewrites": [
       {
         "source": "**",

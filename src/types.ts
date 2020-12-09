@@ -48,6 +48,18 @@ export type Album = {
   uri: string;
 };
 
+type SpotifyPaging<T> = {
+  href: string;
+  items: T[];
+  limits: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
+};
+
+export type SpotifyPlaylistsResponse = SpotifyPaging<SpotifyPlaylist>;
+
 export type SpotifyPlaylist = {
   collaborative: boolean;
   description: string;
@@ -68,15 +80,7 @@ export type SpotifyPlaylist = {
   trackRefs?: DocumentReference<DocumentData>[];
 };
 
-export type PlaylistTracks = {
-  href: string;
-  items: PlaylistItem[];
-  limit: number;
-  next: null;
-  offset: number;
-  previous: null;
-  total: number;
-};
+export type PlaylistTracks = SpotifyPaging<PlaylistItem>;
 
 export type PlaylistItem = {
   added_at: string;
