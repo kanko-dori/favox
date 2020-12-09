@@ -1,6 +1,8 @@
-import { Album, SpotifyIdMap, SpotifyUserResponse, Track, Playlist } from '../../types';
+import { Album, SpotifyIdMap, SpotifyUserResponse, Track, Playlist, Image } from '../../types';
 import { fireStore } from './firebase';
 import { User } from '../../types';
+import * as functions from 'firebase-functions';
+import { getDominantColor } from './getDominantColor';
 
 export const saveUser = async (
   uid: string,
@@ -76,6 +78,25 @@ export const saveAlbum = async (album: Album): Promise<Album> => {
   });
 };
 
+export const updateAlbum = async (album: Album): Promise<Album> => {
+  return new Promise((resolve, reject) => {
+    const albumRef = fireStore.collection('Albums').doc(album.id);
+    albumRef
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log(`Album ${album.id} does not exist`);
+          resolve(doc.data() as Album);
+        }
+
+        albumRef.set(album).then(() => {
+          resolve(album);
+        });
+      })
+      .catch(reject);
+  });
+};
+
 export const saveTrack = async (track: Track): Promise<Track> => {
   return new Promise((resolve, reject) => {
     const albumRef = fireStore.collection('Tracks').doc(track.id);
@@ -110,5 +131,35 @@ export const savePlaylist = async (playlist: Playlist): Promise<Playlist> => {
         });
       })
       .catch((e) => reject(e));
+  });
+};
+
+export const createDominantColorHandler = async (
+  docSnaphot: functions.firestore.QueryDocumentSnapshot,
+  context: functions.EventContext
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const albumId = context.params.albumId as string;
+    if (albumId == null) reject('albumId is null');
+
+    const album = docSnaphot.data() as Album;
+    const images = album.images;
+
+    const dominantColorPromises = album.images.map((image) => {
+      return getDominantColor(image.url);
+    });
+
+    Promise.all(dominantColorPromises)
+      .then((colors) => {
+        return colors.map((color, index) => ({ ...images[index], dominantColor: color } as Image));
+      })
+      .then((newImages) => {
+        const newAlbumData = { ...album, image: newImages } as Album;
+        return updateAlbum(newAlbumData);
+      })
+      .then(() => {
+        resolve();
+      })
+      .catch(reject);
   });
 };
