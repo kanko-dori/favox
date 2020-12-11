@@ -60,7 +60,7 @@ export type Playlist = {
 
 export const usePlaylists = (token: string): Playlist[] => {
   const [next, setNext] = useState<null | string>(`${spotifyApiEndpoint}/v1/me/playlists`);
-  const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   useEffect(() => {
     if (token === '') return;

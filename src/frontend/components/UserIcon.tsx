@@ -1,7 +1,7 @@
 import classes from './UserIcon.module.scss';
 
 interface Props {
-  url: string;
+  url?: string;
 }
 
 const UserIcon: React.FC<Props> = ({ url }) => (
