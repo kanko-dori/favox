@@ -1,5 +1,5 @@
 import { Album, Track, SpotifyPlaylist } from '../../types';
-export const playlistData: SpotifyPlaylist = {
+export const spotifyPlaylistData: SpotifyPlaylist = {
   collaborative: false,
   description: 'Having friends over for dinner? Here´s the perfect playlist.',
   external_urls: {

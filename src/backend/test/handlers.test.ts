@@ -6,8 +6,8 @@ import { addSpotifyPlaylistHandler, spotifyCallbackHandler } from '../handler';
 import * as spotify from '../lib/spotify';
 import * as firestore from '../lib/firestore';
 
-import { SpotifyUserResponse } from '../../types';
-import { playlistData, albumData, trackData } from './spotifyPlaylistData';
+import { Playlist, SpotifyUserResponse } from '../../types';
+import { spotifyPlaylistData, albumData, trackData } from './spotifyPlaylistData';
 
 describe('spotifyCallbackHandler', () => {
   const getTokenSpy = jest
@@ -91,11 +91,24 @@ describe('addSpotifyPlaylistHandler', () => {
     accessToken: 'ACCESS_TOKEN',
     refreshToken: 'REFRESH_TOKEN',
   };
+  const playlistData: Playlist = {
+    id: 'ID',
+    name: 'NAME',
+    description: 'description',
+    owner: {
+      external_urls: { spotify: '' },
+      href: '',
+      id: '',
+      type: 'user',
+      uri: '',
+    },
+    trackRefs: [],
+  };
   const getSpotifyIdMapSpy = jest
     .spyOn(firestore, 'getSpotifyUserByUid')
     .mockReturnValue(Promise.resolve(userData));
-  const savePlaylistSpy = jest.spyOn(firestore, 'savePlaylist').mockReturnValue(playlistData);
-  const getPlaylistSpy = jest.spyOn(spotify, 'getPlaylist').mockReturnValue(playlistData);
+  const savePlaylistSpy = jest.spyOn(firestore, 'savePlaylist').mockResolvedValue(playlistData);
+  const getPlaylistSpy = jest.spyOn(spotify, 'getPlaylist').mockResolvedValue(spotifyPlaylistData);
   const saveAlbumSpy = jest
     .spyOn(firestore, 'saveAlbum')
     .mockReturnValue(Promise.resolve(albumData));
