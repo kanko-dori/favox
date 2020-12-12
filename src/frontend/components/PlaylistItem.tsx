@@ -1,13 +1,21 @@
+import { useFunctions } from '@/lib/firebase';
+import { Playlist } from '@/lib/spotify';
 import classes from './PlaylistItem.module.scss';
 
 interface Props {
-  name: string;
+  playlist: Playlist;
 }
 
-const PlaylistItem: React.FC<Props> = (props) => (
-  <section className={classes.container}>
-    <h3>{props.name}</h3>
-  </section>
-);
+const PlaylistItem: React.FC<Props> = ({ playlist }) => {
+  const { saveSpotifyPlaylist } = useFunctions();
+  return (
+    <button
+      className={classes.container}
+      onClick={() => saveSpotifyPlaylist && saveSpotifyPlaylist({ playlistId: playlist.id })}
+    >
+      <h3>{playlist.name}</h3>
+    </button>
+  );
+};
 
 export default PlaylistItem;

@@ -14,7 +14,7 @@ const User: React.FC = () => {
     <article className={classes.container}>
       <UserInfo user={user} />
       {playlists.map((playlist) => (
-        <PlaylistItem key={playlist.id} name={playlist.name} />
+        <PlaylistItem key={playlist.id} playlist={playlist} />
       ))}
     </article>
   );
