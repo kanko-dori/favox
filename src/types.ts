@@ -14,8 +14,10 @@ export type Playlists = {
 
 export type Playlist = {
   id: string;
+  name: string;
+  description: string;
+  owner: Owner;
   trackRefs: DocumentReference<DocumentData>[];
-  tracks?: (Track | undefined)[];
 };
 
 export type Tracks = {
@@ -73,11 +75,9 @@ export type SpotifyPlaylist = {
   primary_color: null;
   public: boolean;
   snapshot_id: string;
-  playlistTracks: PlaylistTracks;
+  tracks: PlaylistTracks;
   type: string;
   uri: string;
-  tracks?: Track[];
-  trackRefs?: DocumentReference<DocumentData>[];
 };
 
 export type PlaylistTracks = SpotifyPaging<PlaylistItem>;
