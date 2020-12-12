@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
-import { spotifyCallbackHandler } from '../handler';
+import * as functions from 'firebase-functions';
+
+import { addSpotifyPlaylistHandler, spotifyCallbackHandler } from '../handler';
 
 import * as spotify from '../lib/spotify';
 import * as firestore from '../lib/firestore';
 
 import { SpotifyUserResponse } from '../../types';
+import { playlistData, albumData, trackData } from './spotifyPlaylistData';
 
 describe('spotifyCallbackHandler', () => {
   const getTokenSpy = jest
@@ -79,5 +82,36 @@ describe('spotifyCallbackHandler', () => {
     expect(saveUser).toHaveBeenCalled;
     expect(saveSpotyUser).toHaveBeenCalled;
     expect(res.send.mock.calls.length).toBe(1);
+  });
+});
+
+describe('addSpotifyPlaylistHandler', () => {
+  const userData = {
+    uid: ['UID'],
+    accessToken: 'ACCESS_TOKEN',
+    refreshToken: 'REFRESH_TOKEN',
+  };
+  const getSpotifyIdMapSpy = jest
+    .spyOn(firestore, 'getSpotifyUserByUid')
+    .mockReturnValue(Promise.resolve(userData));
+  const savePlaylistSpy = jest.spyOn(firestore, 'savePlaylist').mockReturnValue(playlistData);
+  const getPlaylistSpy = jest.spyOn(spotify, 'getPlaylist').mockReturnValue(playlistData);
+  const saveAlbumSpy = jest
+    .spyOn(firestore, 'saveAlbum')
+    .mockReturnValue(Promise.resolve(albumData));
+  const saveTrackSpy = jest
+    .spyOn(firestore, 'saveTrack')
+    .mockReturnValue(Promise.resolve(trackData));
+
+  it('successfully finished', async () => {
+    const data = { playlistId: 'PLAYLIST_ID' };
+    const context = ({ auth: 'UID' } as unknown) as functions.https.CallableContext;
+    await addSpotifyPlaylistHandler(data, context);
+
+    expect(getSpotifyIdMapSpy).toHaveBeenCalled;
+    expect(getPlaylistSpy).toHaveBeenCalled;
+    expect(saveAlbumSpy).toHaveBeenCalled;
+    expect(saveTrackSpy).toHaveBeenCalled;
+    expect(savePlaylistSpy).toHaveBeenCalled;
   });
 });
