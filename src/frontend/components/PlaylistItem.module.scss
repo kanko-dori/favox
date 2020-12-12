@@ -16,4 +16,13 @@
   &:hover {
     background: rgb(224, 223, 214);
   }
+
+  .loading {
+    animation: rotation 1s ease infinite;
+  }
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
