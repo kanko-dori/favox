@@ -112,3 +112,28 @@ export const savePlaylist = async (playlist: Playlist): Promise<Playlist> => {
       .catch((e) => reject(e));
   });
 };
+
+export const getSpotifyUserByUid = async (uid: string): Promise<User> => {
+  return new Promise((resolve, reject) => {
+    const spotifyIdMapRef = fireStore.collection('SpotifyIdMap').doc(uid);
+    spotifyIdMapRef
+      .get()
+      .then((spotifyIdMapDoc) => {
+        if (!spotifyIdMapDoc.exists) {
+          reject();
+        }
+        const spotifyIdMap = spotifyIdMapDoc.data() as SpotifyIdMap;
+        const spotifyUserRef = fireStore.collection('Users').doc(spotifyIdMap.spotifyId);
+
+        return spotifyUserRef.get();
+      })
+      .then((spotifyUserDoc) => {
+        if (!spotifyUserDoc) {
+          reject();
+        }
+        const spotifyUser = spotifyUserDoc.data() as User;
+
+        resolve(spotifyUser);
+      });
+  });
+};
