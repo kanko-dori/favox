@@ -133,7 +133,7 @@ export type Image = {
   height: number;
   url: string;
   width: number;
-  dominantColor?: number;
+  dominantColor: number;
 };
 
 export type Track = {
