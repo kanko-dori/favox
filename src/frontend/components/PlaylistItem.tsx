@@ -15,14 +15,13 @@ const PlaylistItem: React.FC<Props> = ({ playlist }) => {
   const [playlistStatus, setPlaylistStatus] = useState<'pending' | 'unregistered' | 'registered'>(
     'pending'
   );
-  const changeStatus = (registered: boolean): void =>
-    setPlaylistStatus(registered ? 'registered' : 'unregistered');
 
   useEffect(() => {
-    if (firestore == null) return;
-    const playlistDocRef = firestore.collection('Playlists').doc(playlist.id);
-    const unsubscribeHandler = playlistDocRef.onSnapshot((snap) => changeStatus(snap.exists));
-    return unsubscribeHandler;
+    const unsubscriber = firestore
+      ?.collection('Playlists')
+      .doc(playlist.id)
+      .onSnapshot((snap) => setPlaylistStatus(snap.exists ? 'registered' : 'unregistered'));
+    return unsubscriber;
   }, [firestore, playlist.id]);
 
   const onClick = (): void => {
