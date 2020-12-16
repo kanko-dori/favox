@@ -31,7 +31,7 @@ npm i -g firebase-tools
 プロジェクトの依存関係解消
 
 ```sh
-npm i
+npm install
 ```
 
 ### 起動
