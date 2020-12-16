@@ -60,3 +60,20 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({ children }) 
 };
 
 export const useFirebase = (): FirebaseContextValue => useContext(FirebaseContext);
+
+export type CallableFunctions = {
+  saveSpotifyPlaylist?: (data: {
+    playlistId: string;
+  }) => Promise<firebase.functions.HttpsCallableResult>;
+};
+
+export const useFunctions = (): CallableFunctions => {
+  const { functions } = useContext(FirebaseContext);
+  const [funcs, setFuncs] = useState<CallableFunctions>({});
+  useEffect(() => {
+    setFuncs({
+      saveSpotifyPlaylist: functions?.httpsCallable('saveSpotifyPlaylist'),
+    });
+  }, [functions]);
+  return funcs;
+};

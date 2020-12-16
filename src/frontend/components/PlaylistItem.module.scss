@@ -1,8 +1,12 @@
 .container {
   height: 5rem;
-  display: flex;
-  align-items: center;
   padding: 1rem;
+  display: block;
+  width: 100%;
+  background-color: rgba(255,255,255,0);
+  border: 0;
+  text-align: start;
+  cursor: pointer;
 
   transition: background-color 0.2s;
 
@@ -12,4 +16,13 @@
   &:hover {
     background: rgb(224, 223, 214);
   }
+
+  .loading {
+    animation: rotation 1s ease infinite;
+  }
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

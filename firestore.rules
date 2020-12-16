@@ -12,5 +12,9 @@ service cloud.firestore {
     match /Users/{spotifyId} {
       allow get: if request.auth.uid in resource.data.uid;
     }
+
+    match /Playlists/{playlistId} {
+      allow get;
+    }
   }
 }
