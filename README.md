@@ -25,7 +25,7 @@ Node.js(v10↑)とJDK(v12↑)を用いるのでそれぞれインストールし
 Firebase開発用CLIツールのインストール
 
 ```sh
-npm i -g firebase-tools
+npm install -g firebase-tools
 ```
 
 プロジェクトの依存関係解消
