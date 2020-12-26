@@ -1,9 +1,16 @@
 import { Request, Response } from 'express';
 import { getToken, getUserInfomation } from './lib/spotify';
-import { saveUser, saveSpotifyUser, saveAlbum, savePlaylist, saveTrack } from './lib/firestore';
+import {
+  saveUser,
+  saveSpotifyUser,
+  saveAlbum,
+  savePlaylist,
+  saveTrack,
+  getSpotifyUserByUid,
+} from './lib/firestore';
 
 import { fireStore } from './lib/firebase';
-import { Playlist, SpotifyIdMap, User } from '../types';
+import { Playlist } from '../types';
 import { getPlaylist } from './lib/spotify';
 import * as functions from 'firebase-functions';
 
@@ -35,20 +42,7 @@ export const addSpotifyPlaylistHandler = async (
     return;
   }
   const { uid } = auth;
-  const spotifyIdMapRef = fireStore.collection('SpotifyIdMap').doc(uid);
-  const spotifyIdMapDoc = await spotifyIdMapRef.get();
-  if (!spotifyIdMapDoc.exists) {
-    return;
-  }
-  const spotifyIdMap = spotifyIdMapDoc.data() as SpotifyIdMap;
-
-  const spotifyUserRef = fireStore.collection('Users').doc(spotifyIdMap.spotifyId);
-  const spotifyUserDoc = await spotifyUserRef.get();
-  if (!spotifyUserDoc) {
-    return;
-  }
-  const spotifyUser = spotifyUserDoc.data() as User;
-
+  const spotifyUser = await getSpotifyUserByUid(uid);
   const playlistData = await getPlaylist(data.playlistId, spotifyUser.accessToken);
   const tracks = playlistData.tracks.items.map((item) => item.track);
   const albums = tracks.map((track) => track.album);

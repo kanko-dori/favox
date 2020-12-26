@@ -72,7 +72,7 @@ export type SpotifyPlaylist = {
   images: Image[];
   name: string;
   owner: Owner;
-  primary_color: null;
+  primary_color?: null;
   public: boolean;
   snapshot_id: string;
   tracks: PlaylistTracks;
@@ -86,10 +86,10 @@ export type PlaylistItem = {
   added_at: string;
   added_by: Owner;
   is_local: boolean;
-  primary_color: null;
+  primary_color?: null;
   track: Track;
   trackRef?: string;
-  video_thumbnail: VideoThumbnail;
+  video_thumbnail?: VideoThumbnail;
 };
 
 type VideoThumbnail = {
@@ -138,22 +138,22 @@ export type Image = {
 
 export type Track = {
   album: SpotifyAlbum;
-  albumRef: DocumentReference<DocumentData>;
+  albumRef?: DocumentReference<DocumentData>;
   artists: Owner[];
   disc_number: number;
   duration_ms: number;
-  episode: boolean;
+  episode?: boolean;
   explicit: boolean;
   external_ids: ExternalIDS;
   external_urls: ExternalUrls;
   href: string;
   id: string;
-  is_local: boolean;
-  is_playable: boolean;
+  is_local?: boolean;
+  is_playable?: boolean;
   name: string;
   popularity: number;
   preview_url: string;
-  track: boolean;
+  track?: boolean;
   track_number: number;
   type: ownerType;
   uri: string;
