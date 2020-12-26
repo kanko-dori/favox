@@ -116,7 +116,7 @@ describe('addSpotifyPlaylistHandler', () => {
     .spyOn(firestore, 'saveTrack')
     .mockReturnValue(Promise.resolve(trackData));
 
-  it('Verify that it exits normally.', async () => {
+  it('should not cause an error like type error', async () => {
     const data = { playlistId: 'PLAYLIST_ID' };
     const context = ({ auth: 'UID' } as unknown) as functions.https.CallableContext;
     await addSpotifyPlaylistHandler(data, context);
