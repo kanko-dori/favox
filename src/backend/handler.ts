@@ -7,12 +7,14 @@ import {
   savePlaylist,
   saveTrack,
   getSpotifyUserByUid,
+  updateAlbumImage,
 } from './lib/firestore';
 
 import { fireStore } from './lib/firebase';
-import { Playlist } from '../types';
+import { Album, Image, Playlist } from '../types';
 import { getPlaylist } from './lib/spotify';
 import * as functions from 'firebase-functions';
+import { getDominantColor } from './lib/getDominantColor';
 
 export const spotifyCallbackHandler = async (req: Request, res: Response): Promise<void> => {
   const code = req.query.code as string;
@@ -79,4 +81,28 @@ export const addSpotifyPlaylistHandler = async (
     console.error;
   }
 };
+
+export const generateDominantColorHandler = async (
+  snapshot: functions.firestore.QueryDocumentSnapshot,
+  context: functions.EventContext
+): Promise<void> => {
+  const albumId = context.params.albumId as string;
+  if (albumId == null) {
+    return Promise.reject('albumId is null');
+  }
+
+  const albumData = snapshot.data() as Album;
+  const newImages: Image[] = [];
+
+  try {
+    await Promise.all(
+      albumData.images.map(async (image) => {
+        const color = await getDominantColor(image.url);
+        newImages.push({ ...image, dominantColor: color });
+      })
+    );
+    await updateAlbumImage(albumData.id, newImages);
+  } catch (e) {
+    console.error(e);
+  }
 };
