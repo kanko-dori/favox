@@ -1,4 +1,4 @@
-import { Album, SpotifyIdMap, SpotifyUserResponse, Track, Playlist } from '../../types';
+import { Album, SpotifyIdMap, SpotifyUserResponse, Image, Track, Playlist } from '../../types';
 import { fireStore } from './firebase';
 import { User } from '../../types';
 
@@ -70,6 +70,25 @@ export const saveAlbum = async (album: Album): Promise<Album> => {
 
         albumRef.set(album).then(() => {
           resolve(album);
+        });
+      })
+      .catch(reject);
+  });
+};
+
+export const updateAlbumImage = async (id: string, images: Image[]): Promise<Image[]> => {
+  return new Promise((resolve, reject) => {
+    const albumRef = fireStore.collection('Albums').doc(id);
+    albumRef
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log(`Album ${id} is doesn't exist`);
+          reject();
+        }
+
+        albumRef.set({ images: images }, { merge: true }).then(() => {
+          resolve(images);
         });
       })
       .catch(reject);
