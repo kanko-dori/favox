@@ -42,36 +42,41 @@ export const addSpotifyPlaylistHandler = async (
     return;
   }
   const { uid } = auth;
-  const spotifyUser = await getSpotifyUserByUid(uid);
-  const playlistData = await getPlaylist(data.playlistId, spotifyUser.accessToken);
-  const tracks = playlistData.tracks.items.map((item) => item.track);
-  const albums = tracks.map((track) => track.album);
+  try {
+    const spotifyUser = await getSpotifyUserByUid(uid);
+    const playlistData = await getPlaylist(data.playlistId, spotifyUser.accessToken);
+    const tracks = playlistData.tracks.items.map((item) => item.track);
+    const albums = tracks.map((track) => track.album);
 
-  const saveAlbumPromises = albums.map(saveAlbum);
-  await Promise.all(saveAlbumPromises);
+    const saveAlbumPromises = albums.map(saveAlbum);
+    await Promise.all(saveAlbumPromises).catch(console.error);
 
-  const trackCollections = tracks.map((track) => {
-    return {
-      ...track,
-      albumRef: fireStore.doc(`Albums/${track.album.id}`),
+    const trackCollections = tracks.map((track) => {
+      return {
+        ...track,
+        albumRef: fireStore.doc(`Albums/${track.album.id}`),
+      };
+    });
+
+    const saveTrackPromises = trackCollections.map(saveTrack);
+    await Promise.all(saveTrackPromises).catch(console.error);
+
+    const trackRefs = playlistData.tracks.items.map((item) => {
+      console.log(`ref: Tracks/${item.track.id}`);
+      return fireStore.doc(`Tracks/${item.track.id}`);
+    });
+
+    const playlist: Playlist = {
+      id: playlistData.id,
+      name: playlistData.name,
+      owner: playlistData.owner,
+      description: playlistData.description,
+      trackRefs: trackRefs,
     };
-  });
 
-  const saveTrackPromises = trackCollections.map(saveTrack);
-  await Promise.all(saveTrackPromises);
-
-  const trackRefs = playlistData.tracks.items.map((item) => {
-    console.log(`ref: Tracks/${item.track.id}`);
-    return fireStore.doc(`Tracks/${item.track.id}`);
-  });
-
-  const playlist: Playlist = {
-    id: playlistData.id,
-    name: playlistData.name,
-    owner: playlistData.owner,
-    description: playlistData.description,
-    trackRefs: trackRefs,
-  };
-
-  await savePlaylist(playlist);
+    await savePlaylist(playlist).catch(console.error);
+  } catch (e) {
+    console.error;
+  }
+};
 };
