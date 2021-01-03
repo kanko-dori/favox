@@ -59,7 +59,13 @@ export const getPlaylist = async (
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  });
+  })
+    .then((res) => res.json())
+    .then((resData) => resData as SpotifyPlaylist)
+    .catch((e) => {
+      console.error(e);
+      throw new Error(e);
+    });
 
-  return (await playlistResponse.json()) as SpotifyPlaylist;
+  return playlistResponse;
 };
