@@ -36,13 +36,19 @@ export const getToken = async (
 };
 
 export const getUserInfomation = async (accessToken: string): Promise<SpotifyUserResponse> => {
-  const userDataResponse = await fetch('https://api.spotify.com/v1/me', {
+  const userData = await fetch('https://api.spotify.com/v1/me', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  });
+  })
+    .then((res) => res.json())
+    .then((resData) => resData as SpotifyUserResponse)
+    .catch((e) => {
+      console.error(e);
+      throw new Error(e);
+    });
 
-  return (await userDataResponse.json()) as SpotifyUserResponse;
+  return userData;
 };
 
 export const getPlaylist = async (
