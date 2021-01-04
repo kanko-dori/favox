@@ -41,8 +41,7 @@ export const getUserInfomation = async (accessToken: string): Promise<SpotifyUse
       Authorization: `Bearer ${accessToken}`,
     },
   })
-    .then((res) => res.json())
-    .then((resData) => resData as SpotifyUserResponse)
+    .then((res) => res.json() as SpotifyUserResponse)
     .catch((e) => {
       console.error(e);
       throw new Error(e);
