@@ -88,7 +88,7 @@ export const generateDominantColorHandler = async (
 ): Promise<void> => {
   const albumId = context.params.albumId as string;
   if (albumId == null) {
-    return Promise.reject('albumId is null');
+    return Promise.reject(new Error('albumId is null'));
   }
 
   const albumData = snapshot.data() as Album;
