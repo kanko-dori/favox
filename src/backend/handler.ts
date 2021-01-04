@@ -78,7 +78,7 @@ export const addSpotifyPlaylistHandler = async (
 
     await savePlaylist(playlist).catch(console.error);
   } catch (e) {
-    console.error;
+    console.error(e);
   }
 };
 
