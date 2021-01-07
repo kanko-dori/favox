@@ -16,5 +16,9 @@ service cloud.firestore {
     match /Playlists/{playlistId} {
       allow get;
     }
+
+    match /Albums/{albumId} {
+      allow get;
+    }
   }
 }
