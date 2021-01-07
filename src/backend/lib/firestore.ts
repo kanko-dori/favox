@@ -1,4 +1,4 @@
-import { Album, SpotifyIdMap, SpotifyUserResponse, Track, Playlist } from '../../types';
+import { Album, SpotifyIdMap, SpotifyUserResponse, Image, Track, Playlist } from '../../types';
 import { fireStore } from './firebase';
 import { User } from '../../types';
 
@@ -76,22 +76,31 @@ export const saveAlbum = async (album: Album): Promise<Album> => {
   });
 };
 
+export const updateAlbumImage = async (id: string, images: Image[]): Promise<Image[]> => {
+  const albumRef = fireStore.collection('Albums').doc(id);
+  return albumRef
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        throw new Error(`Album ${id} is doesn't exist`);
+      }
+      return albumRef.set({ images: images }, { merge: true });
+    })
+    .then(() => images);
+};
+
 export const saveTrack = async (track: Track): Promise<Track> => {
-  return new Promise((resolve, reject) => {
-    const albumRef = fireStore.collection('Tracks').doc(track.id);
-    albumRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          console.log(`Track ${track.id} is already exists`);
-          resolve(doc.data() as Track);
-        }
-        albumRef.set(track).then(() => {
-          resolve(track);
-        });
-      })
-      .catch((e) => reject(e));
-  });
+  // return new Promise((resolve, reject) => {
+  const albumRef = fireStore.collection('Tracks').doc(track.id);
+  return albumRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        throw new Error(`Track ${track.id} is already exist`);
+      }
+      return albumRef.set(track);
+    })
+    .then(() => track);
 };
 
 export const savePlaylist = async (playlist: Playlist): Promise<Playlist> => {

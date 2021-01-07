@@ -2,7 +2,11 @@ import express from 'express';
 import * as functions from 'firebase-functions';
 import next from 'next';
 import cors from 'cors';
-import { addSpotifyPlaylistHandler, spotifyCallbackHandler } from './handler';
+import {
+  addSpotifyPlaylistHandler,
+  spotifyCallbackHandler,
+  generateDominantColorHandler,
+} from './handler';
 
 const server = express();
 const nextjsServer = next({
@@ -21,3 +25,6 @@ server.all('/**', (req, res, next) => {
 
 export const app = functions.https.onRequest(server);
 export const saveSpotifyPlaylist = functions.https.onCall(addSpotifyPlaylistHandler);
+export const generateDominantColor = functions.firestore
+  .document('Albums/{albumId}')
+  .onCreate(generateDominantColorHandler);
