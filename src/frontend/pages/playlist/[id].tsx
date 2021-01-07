@@ -39,12 +39,18 @@ export const getServerSideProps: GetServerSideProps = async (
     });
 };
 
+const Page: React.FC<Props> = (props: Props) => {
   return (
     <>
       <Header />
-      <TrackCovers tracks={tracks} />
+      {props.error && (
+        <>
+          <h3>Error!</h3>
+          <p>{props.error.message}</p>
+        </>
+      )}
+      <TrackCovers tracks={props.tracks} />
     </>
   );
 };
-
-export default Playlist;
+export default Page;
