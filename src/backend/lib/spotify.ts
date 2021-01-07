@@ -36,24 +36,24 @@ export const getToken = async (
 };
 
 export const getUserInfomation = async (accessToken: string): Promise<SpotifyUserResponse> => {
-  const userDataResponse = await fetch('https://api.spotify.com/v1/me', {
+  return fetch('https://api.spotify.com/v1/me', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  });
-
-  return (await userDataResponse.json()) as SpotifyUserResponse;
+  })
+    .then((res) => res.json())
+    .then((resData) => resData as SpotifyUserResponse);
 };
 
 export const getPlaylist = async (
   playlistId: string,
   accessToken: string
 ): Promise<SpotifyPlaylist> => {
-  const playlistResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+  return fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  });
-
-  return (await playlistResponse.json()) as SpotifyPlaylist;
+  })
+    .then((res) => res.json())
+    .then((resData) => resData as SpotifyPlaylist);
 };
