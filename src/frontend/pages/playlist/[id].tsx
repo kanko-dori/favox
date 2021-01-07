@@ -39,17 +39,17 @@ export const getServerSideProps: GetServerSideProps = async (
     });
 };
 
-const Page: React.FC<Props> = (props: Props) => {
+const Page: React.FC<Props> = ({ error, tracks }: Props) => {
   return (
     <>
       <Header />
-      {props.error && (
+      {error && (
         <>
           <h3>Error!</h3>
-          <p>{props.error.message}</p>
+          <p>{error.message}</p>
         </>
       )}
-      <TrackCovers tracks={props.tracks} />
+      <TrackCovers tracks={tracks} />
     </>
   );
 };
