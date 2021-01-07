@@ -7,12 +7,13 @@ interface Props {
 }
 
 const Cover: React.FC<Props> = ({ track }) => {
+  const color = track.album.images[0].dominantColor ?? 0xffffff;
   return (
     <section
       title={track.name}
       className={classes.container}
       style={{
-        backgroundColor: `#${track.album.images[0].dominantColor.toString(16)}`,
+        backgroundColor: `#${color.toString(16)}`,
       }}
     >
       <div className={`playing ${classes.progress}`} />
