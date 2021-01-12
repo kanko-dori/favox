@@ -3,6 +3,10 @@
   position: relative;
   --shadow-color: rgba(0, 0, 0, 0.5);
 
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  transition-timing-function: linear;
+
   .progress {
     position: absolute;
     top: 0;

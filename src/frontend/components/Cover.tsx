@@ -1,6 +1,6 @@
 import { useFirebase } from '@/lib/firebase';
 import { numToHexColor } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Album, Track } from '../../types';
 import classes from './Cover.module.scss';
 import TrackController from './TrackController';
@@ -12,6 +12,7 @@ interface Props {
 const Cover: React.FC<Props> = ({ track }) => {
   const [color, setColor] = useState('#f5f5f5');
   const { firestore } = useFirebase();
+  const delay = useMemo(() => Math.random() * 2, []);
 
   useEffect(() => {
     const albumRef = firestore?.collection('Albums').doc(track.album.id);
@@ -28,7 +29,11 @@ const Cover: React.FC<Props> = ({ track }) => {
   }, [firestore, track.album.id]);
 
   return (
-    <section title={track.name} className={classes.container} style={{ backgroundColor: color }}>
+    <section
+      title={track.name}
+      className={classes.container}
+      style={{ backgroundColor: color, transitionDelay: `${delay}s` }}
+    >
       <div className={`playing ${classes.progress}`} />
       <img className={classes.cover} src={track.album.images[0].url} alt="cover" />
       <TrackController />
