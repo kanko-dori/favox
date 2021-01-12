@@ -33,10 +33,6 @@ const Helmet: React.FC<Props> = ({ title, description, color, children }) => {
       <meta key="og:url" property="og:url" content={pathname} />
       <meta key="twitter:url" name="twitter:url" content={pathname} />
       <meta key="twitter:card" name="twitter:card" content="summary" />
-      {/* <meta key="twitter:image" name="twitter:image" content={image} />
-      <meta key="og:image" property="og:image" content={image} />
-      <link rel="shortcut icon" href="" />
-      <link rel="apple-touch-icon" href="" /> */}
       {children}
     </Head>
   );
