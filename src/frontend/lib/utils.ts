@@ -7,3 +7,5 @@ export const numToHexColor = (num: number): string => {
   if (!(0x000000 <= num && num <= 0xffffff)) throw new Error(`Invalid number ${num}`);
   return '#' + num.toString(16).padStart(6, '0');
 };
+
+export const getFullpath = (path: string): string => `${process.env.ORIGIN}${path}`;
