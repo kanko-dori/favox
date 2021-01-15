@@ -5,6 +5,7 @@ const TrackController: React.FC = () => {
   const [playing, setPlaying] = useState(false);
   return (
     <div className={classes.container}>
+      <div className={`${playing ? classes.playing : ''} ${classes.progress}`} />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="100px"
