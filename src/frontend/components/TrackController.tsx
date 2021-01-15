@@ -20,9 +20,7 @@ const TrackController: React.FC<Props> = ({ audioSrc }) => {
     audioElm.play();
     audioElm.addEventListener('ended', () => setPlaying(false));
 
-    return () => {
-      audioElm.removeEventListener('ended', () => setPlaying(false));
-    };
+    return () => audioElm.removeEventListener('ended', () => setPlaying(false));
   }, [playing]);
 
   return (
