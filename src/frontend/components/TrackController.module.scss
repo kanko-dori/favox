@@ -34,22 +34,4 @@
       100% { transform: scaleX(1); }
     }
   }
-
-  svg {
-    --size: 20%;
-    fill: rgba(255, 255, 255, calc(var(--visible)));
-    transition: fill 0.3s;
-    width: var(--size);
-    height: var(--size);
-
-    cursor: pointer;
-
-    --shadow: 0;
-    filter: drop-shadow(0.1vw 0.1vw 1vw rgba(0, 0, 0, var(--shadow)));
-    transition: filter 0.2s;
-
-    &:hover {
-      --shadow: 1;
-    }
-  }
 }
