@@ -35,7 +35,7 @@ const Cover: React.FC<Props> = ({ track }) => {
       style={{ backgroundColor: color, transitionDelay: `${delay}s` }}
     >
       <img className={classes.cover} src={track.album.images[0].url} alt="cover" />
-      <TrackController audioSrc={track.preview_url} />
+      {track.preview_url && <TrackController audioSrc={track.preview_url} />}
     </section>
   );
 };
