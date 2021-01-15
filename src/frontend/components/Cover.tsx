@@ -30,7 +30,7 @@ const Cover: React.FC<Props> = ({ track }) => {
   return (
     <section title={track.name} className={classes.container} style={{ backgroundColor: color }}>
       <img className={classes.cover} src={track.album.images[0].url} alt="cover" />
-      <TrackController />
+      <TrackController audioSrc={track.preview_url} />
     </section>
   );
 };

@@ -1,8 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import classes from './TrackController.module.scss';
 
-const TrackController: React.FC = () => {
+type Props = {
+  audioSrc: string;
+};
+
+const TrackController: React.FC<Props> = ({ audioSrc }) => {
   const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audioElm = audioRef.current;
+    if (!audioElm) return;
+    if (playing) {
+      audioElm.currentTime = 0;
+      audioElm.play();
+      setTimeout(() => setPlaying(false), 30 * 1100);
+    } else {
+      audioElm.pause();
+    }
+  }, [playing]);
+
   return (
     <div className={classes.container}>
       <div className={`${playing ? classes.playing : ''} ${classes.progress}`} />
@@ -22,6 +40,9 @@ const TrackController: React.FC = () => {
           </>
         )}
       </svg>
+      <audio className={classes.audio} ref={audioRef} src={audioSrc}>
+        <track kind="captions" />
+      </audio>
     </div>
   );
 };
