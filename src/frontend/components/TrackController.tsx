@@ -6,6 +6,8 @@ type Props = {
   audioSrc: string;
 };
 
+const DEFAULT_DURATION = 30;
+
 const TrackController: React.FC<Props> = ({ audioSrc }) => {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -30,7 +32,7 @@ const TrackController: React.FC<Props> = ({ audioSrc }) => {
         <div
           className={classes.progress}
           style={{
-            animationDuration: `${audioRef.current?.duration ?? 30}s`,
+            animationDuration: `${audioRef.current?.duration ?? DEFAULT_DURATION}s`,
           }}
         />
       )}
