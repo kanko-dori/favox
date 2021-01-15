@@ -12,18 +12,29 @@ const TrackController: React.FC<Props> = ({ audioSrc }) => {
   useEffect(() => {
     const audioElm = audioRef.current;
     if (!audioElm) return;
-    if (playing) {
-      audioElm.currentTime = 0;
-      audioElm.play();
-      setTimeout(() => setPlaying(false), 30 * 1100);
-    } else {
+    if (!playing) {
       audioElm.pause();
+      return;
     }
+    audioElm.currentTime = 0;
+    audioElm.play();
+    audioElm.addEventListener('ended', () => setPlaying(false));
+
+    return () => {
+      audioElm.removeEventListener('ended', () => setPlaying(false));
+    };
   }, [playing]);
 
   return (
     <div className={classes.container}>
-      <div className={`${playing ? classes.playing : ''} ${classes.progress}`} />
+      {playing && (
+        <div
+          className={classes.progress}
+          style={{
+            animationDuration: `${audioRef.current?.duration ?? 30}s`,
+          }}
+        />
+      )}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="100px"

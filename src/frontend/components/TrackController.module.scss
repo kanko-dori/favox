@@ -25,12 +25,9 @@
     transform: scaleX(0);
     transform-origin: top left;
 
-    &.playing {
-      animation-name: progress;
-      animation-duration: 30s;
-      animation-timing-function: linear;
-      animation-iteration-count: 1;
-    }
+    animation-name: progress;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
 
     @keyframes progress {
       0% { transform: scaleX(0); }
