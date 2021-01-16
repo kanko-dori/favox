@@ -1,7 +1,7 @@
 import Helmet from '@/components/Helmet';
 import { FirebaseProvider } from '@/lib/firebase';
 import { UserProvider } from '@/lib/UserProvider';
-import { getFullpath } from '@/lib/utils';
+import { getAbsolutePath } from '@/lib/utils';
 import type { AppProps } from 'next/app';
 import './_app.scss';
 
@@ -19,9 +19,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
         <meta
           key="twitter:image"
           name="twitter:image"
-          content={getFullpath('/images/icon512.png')}
+          content={getAbsolutePath('/images/icon512.png')}
         />
-        <meta key="og:image" property="og:image" content={getFullpath('/images/icon512.png')} />
+        <meta key="og:image" property="og:image" content={getAbsolutePath('/images/icon512.png')} />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="icon" href="/favox.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/images/icon192.png" />

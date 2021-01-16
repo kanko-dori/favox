@@ -8,4 +8,4 @@ export const numToHexColor = (num: number): string => {
   return '#' + num.toString(16).padStart(6, '0');
 };
 
-export const getFullpath = (path: string): string => `${process.env.ORIGIN}${path}`;
+export const getAbsolutePath = (path: string): string => `${process.env.ORIGIN}${path}`;

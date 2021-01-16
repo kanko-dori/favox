@@ -1,4 +1,4 @@
-import { getFullpath } from '@/lib/utils';
+import { getAbsolutePath } from '@/lib/utils';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -31,8 +31,8 @@ const Helmet: React.FC<Props> = ({ title, description, color, children }) => {
       )}
       {color && <meta key="theme-color" name="theme-color" content={color} />}
       <meta key="og:type" property="og:type" content="website" />
-      <meta key="og:url" property="og:url" content={getFullpath(asPath)} />
-      <meta key="twitter:url" name="twitter:url" content={getFullpath(asPath)} />
+      <meta key="og:url" property="og:url" content={getAbsolutePath(asPath)} />
+      <meta key="twitter:url" name="twitter:url" content={getAbsolutePath(asPath)} />
       <meta key="twitter:card" name="twitter:card" content="summary" />
       {children}
     </Head>
