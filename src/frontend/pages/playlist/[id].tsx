@@ -1,7 +1,9 @@
 import Header from '@/components/Header';
 import TrackCovers from '@/components/TrackCovers';
+import { AudioContextProvider } from '@/lib/AudioContextProvider';
 import { firestore } from 'firebase-admin';
 import { GetServerSideProps, GetServerSidePropsResult } from 'next';
+import React from 'react';
 import { Track, Playlist } from '../../../types';
 
 type Props = {
@@ -41,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
 const Page: React.FC<Props> = ({ error, tracks }: Props) => {
   return (
-    <>
+    <AudioContextProvider>
       <Header />
       {error && (
         <>
@@ -50,7 +52,7 @@ const Page: React.FC<Props> = ({ error, tracks }: Props) => {
         </>
       )}
       <TrackCovers tracks={tracks} />
-    </>
+    </AudioContextProvider>
   );
 };
 export default Page;
