@@ -20,3 +20,5 @@ export const createGainedAudioNode = (
 
   return { sourceNode, gainNode };
 };
+
+export const getAbsolutePath = (path: string): string => `${process.env.ORIGIN}${path}`;
